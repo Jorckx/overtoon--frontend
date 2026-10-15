@@ -1,4 +1,3 @@
-// import { posts } from '$lib/queries/data.ts';
 import { useKqlQuery } from '#lib/utils/useKirby.ts';
 import { getMetaQuery, globalMetaQuery, siteQuery } from '#lib/queries/index.ts';
 import { dev } from '$app/env';
