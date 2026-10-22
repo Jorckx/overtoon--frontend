@@ -3,5 +3,13 @@
 	"name": "overtoon-frontend",
 	"compatibility_date": "2026-10-15",
 	"compatibility_flags": ["nodejs_als"],
-	"pages_build_output_dir": ".svelte-kit/cloudflare"
+	"pages_build_output_dir": ".svelte-kit/cloudflare",
+  "env": {
+		"production": {
+      "vars": { "MODE": "production", "KIRBY_API_URL": "https://admin.overtoon.org" }
+    },
+    "preview": {
+      "vars": { "MODE": "development", "KIRBY_API_URL": "https://admin.overtoon.org"}
+    }
+  }
 }
