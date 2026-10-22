@@ -1,23 +1,24 @@
 import { useKqlQuery } from '#lib/utils/useKirby.ts';
-import { getMetaQuery, globalMetaQuery, siteQuery } from '#lib/queries/index.ts';
+import { getLang } from '#lib/utils/i18n.ts';
+import { globalMetaQuery, siteQuery } from '#lib/queries/index.ts';
 import { dev } from '$app/env';
 
 let devmode = false;
 if (dev) {
 	devmode = true;
 }
-export async function load({ url }) {
-	const { pathname } = url;
+export async function load({ url, params }) {
+	const lang = getLang(params);
 	// retun for static files like favicon.ico
-	if (pathname.includes('.')) return { devmode };
-	// resolve path to match kirby collection slugs
-  try {
-    const siteData = await useKqlQuery(siteQuery)
-		const seoData = await useKqlQuery(getMetaQuery(pathname));
-		const seoGlobal = await useKqlQuery(globalMetaQuery);
+	if (url.pathname.includes('.')) return { devmode, lang };
+	try {
+		const [siteData, seoGlobal] = await Promise.all([
+			useKqlQuery(siteQuery, lang),
+			useKqlQuery(globalMetaQuery, lang)
+		]);
 		return {
+			lang: lang,
 			// seo data
-			seoData: seoData,
 			seoGlobal: seoGlobal,
 			// global site data
 			siteData: siteData,
@@ -27,7 +28,7 @@ export async function load({ url }) {
 	} catch (err) {
 		const errorMessage = err instanceof Error ? err.message : 'Unknown error';
 		return {
-			seoData: null,
+			lang: lang,
 			seoGlobal: null,
 			siteData: null,
 			devmode: devmode,

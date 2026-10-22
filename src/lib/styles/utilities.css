@@ -1,0 +1,23 @@
+/* Header */
+
+/* Main + sidebar */
+@utility wrapper {
+    @apply grid grid-cols-(--grid-wrapper-cols) grid-rows-(--grid-wrapper-rows) min-h-dvh ;
+}
+@utility logo {
+    @apply col-start-1 row-start-1;
+}
+@utility main {
+    @apply col-start-1 row-start-2 ;
+}
+@utility sidebar {
+    @apply col-start-2 row-start-1 row-span-2 w-full font-marfa;
+}
+
+/* gradients */
+@utility bg-gradient {
+    @apply bg-linear-to-b from-gradient-1 to-gradient-2;
+}
+@utility bg-gradient-reverse {
+    @apply bg-linear-to-t from-gradient-1 to-gradient-2;
+}

@@ -1,0 +1,34 @@
+/* ————————————————————————————————————————————————————————————————————————
+DOCS: https://tailwindcss.com/docs/theme
+REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
+———————————————————————————————————————————————————————————————————————— */
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 976px;
+
+    /* fonts */
+    --font-tz-mono: "Timezone Mono", serif;
+    --font-tz: "Timezone", serif;
+    --font-marfa: "Marfa", sans-serif;
+
+    --text-large: clamp(1rem, 20vw, 8rem);
+
+    /* spacing */
+    --spacing-main: 1rem;
+
+    /* bg gradient*/
+    --color-gradient-1: #99E1DB;
+    --color-gradient-2: #FFF;
+}
+@theme static {
+    --sidebar-w: clamp(180px, 20%, 380px);
+    --grid-wrapper-cols: 1fr var(--sidebar-w);
+    --grid-wrapper-rows: auto 1fr;
+}
+
+
+body {
+    @apply font-marfa min-h-dvh bg-linear-to-t from-gradient-1 to-gradient-2;
+}

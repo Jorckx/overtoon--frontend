@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
 
   let {
-    color = '#333',
-    range = [0.6, 1.4]
+    color = '#000',
+    range = [0.4, .8]
   }: { color?: string; range?: [number, number] } = $props();
 
   // Base sizes in vmin units, plus how each shape reacts to the cursor.
@@ -103,20 +103,14 @@
 </div>
 
 <style>
-  .resonance {
-    position: fixed;
-    right: 2vmin;
-    bottom: 2vmin;
-    display: flex;
-    align-items: flex-end; /* all shapes share one baseline */
-    gap: 1.6vmin;
-    pointer-events: none; /* never blocks clicks on the page */
-    opacity: 0; /* hidden until the first size is computed (no SSR flash) */
-    transition: opacity 0.4s;
-  }
+    @reference "../../app.css";
+    .resonance {
+        @apply left-main z-300 fixed flex justify-end gap-[1.6vmin] items-end right-(--sidebar-w) pr-main bottom-main pointer-events-none opacity-80;
+        transition: opacity 0.4s;
+    }
 
   .resonance.ready {
-    opacity: 1;
+    opacity: 80%;
   }
 
   .shape {
