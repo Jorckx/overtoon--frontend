@@ -6,10 +6,10 @@
 	"pages_build_output_dir": ".svelte-kit/cloudflare",
   "env": {
 		"production": {
-      "vars": { "MODE": "production", "KIRBY_API_URL": "https://admin.overtoon.org" }
+      "vars": { "MODE": "production", "KIRBY_API_URL": "https://admin.overtoon.org", "AUTH": "true" }
     },
     "preview": {
-      "vars": { "MODE": "development", "KIRBY_API_URL": "https://admin.overtoon.org"}
+      "vars": { "MODE": "development", "KIRBY_API_URL": "https://admin.overtoon.org", "AUTH": "true"}
     }
   }
 }
