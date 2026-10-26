@@ -204,7 +204,7 @@
 		overflow: hidden;
 		object-position: center;
 		object-fit: contain;
-		 height: 100%;
+		/* height: 100%; */
 		/* margin: auto; */
 		width: fit-content;
 		max-width: 100%;
