@@ -8,6 +8,9 @@ declare global {
 			caches: CacheStorage;
 			cf?: IncomingRequestCfProperties;
 		}
+    interface Locals {
+    	cacheTags: Set<string>;
+    }
 
 		// interface Error {}
 		// interface Locals {}

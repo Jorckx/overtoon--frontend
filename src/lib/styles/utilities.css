@@ -11,7 +11,7 @@
     @apply col-start-1 row-start-2 ;
 }
 @utility sidebar {
-    @apply col-start-2 row-start-1 row-span-2 w-full font-marfa;
+    @apply col-start-2 row-start-1 row-span-2 w-full font-marfa bg-gradient;
 }
 
 /* gradients */
