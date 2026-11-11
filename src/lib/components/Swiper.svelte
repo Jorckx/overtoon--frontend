@@ -1,162 +1,129 @@
-<script lang="ts">
-	let { images, index = 0 } = $props();
-	// import { page } from '$app/state';
-	// import function to register Swiper custom elements
-	// import { tick } from 'svelte';
-	import { register } from 'swiper/element/bundle';
-	import type { SwiperContainer } from 'swiper/element';
-	import { FreeMode } from 'swiper/modules';
-	import Image from './Image.svelte';
-	import { inView } from '$lib/utils/useInView';
-	import { activeProject } from '$lib/utils/shared.svelte';
+<script lang="ts" generics="T">
+	import type { Snippet } from 'svelte';
+	import type { SwiperOptions } from 'swiper/types';
+	import { Pagination } from 'swiper/modules';
+	import { onMount } from 'svelte';
+	// register() once in the root layout: import { register } from 'swiper/element/bundle';
 
-	// import Arrow from '$lib/components/Icons/Arrow.svelte';
-	// import ArrowSvg from '$lib/assets/Arrow.svg?url';
-
-	// register Swiper custom elements
-	register();
-
-	// JAVASCRIPT
-
-	// let isMobile = $state(false);
-	let swiperEl: SwiperContainer | undefined = $state();
-	// const BREAKPOINT = 768;
-
-	// let visible = $state(false);
-	// async function handleInView() {
-	// 	// visible = true;
-	// 	console.log('visible');
-	// 	await tick();
-	// 	swiperEl?.swiper?.update();
-	// }
-
-	const swiperParams = {
-		// https://swiperjs.com/swiper-api#parameters
-		// slidesPerView: 1,
-		enabled: true, // Disabled by default for mobile
-		direction: 'horizontal',
-		roundLengths: true,
-		alignSelf: 'start',
-		centeredSlides: false,
-		loop: true,
-		speed: 0,
-		// pagination: {
-		// 	el: 'swiper-pagination-0',
-		// 	type: 'fraction'
-		// },
-		lazyload: true,
-		on: {
-			slideChange: (swiper: any) => {
-				if (activeProject.index === index) {
-					activeProject.activeslide = swiper.realIndex + 1;
-				}
-			}
-		},
-		mousewheel: {
-			enabled: false,
-			releaseOnEdges: true
-		},
-		keyboard: {
-			enabled: true,
-			onlyInViewport: true
-		},
-		modules: [FreeMode],
-		freeMode: false
-	};
-
-	// onMount(() => {
-	// 	const mq = window.matchMedia(`(max-width: ${BREAKPOINT - 1}px)`);
-	// 	isMobile = mq.matches;
-	// 	const handler = (e: MediaQueryListEvent) => {
-	// 		isMobile = e.matches;
-	// 	};
-	// 	mq.addEventListener('change', handler);
-
-	// 	return () => mq.removeEventListener('change', handler);
-	// });
-	// Triggered by Intersection Observer
-	async function handleInView(isInView: boolean) {
-		if (isInView) {
-			// Notify the parent that THIS specific slider is now active
-			// onVisible(index, images.length);
-			activeProject.slidesCount = images.length;
-			// await tick();
-			// swiperEl?.swiper?.update();
-		}
+	interface Props {
+		data: T[];
+		slide: Snippet<[T, number]>;
+		/** Merged over the defaults */
+		params?: SwiperOptions;
+		nav?: boolean;
+		/** Below this viewport width a plain stacked list is rendered. 0 = always swiper. */
+		stackBelow?: number;
+		class?: string;
 	}
 
+	let { data, slide, params = {}, nav = false, stackBelow = 768, class: className = '' }: Props = $props();
+
+	let stacked = $state(false);
+	let swiperEl = $state<(HTMLElement & { initialize: () => void }) | null>(null);
+
+	const defaults: SwiperOptions = {
+		slidesPerView: 'auto',
+		spaceBetween: 0,
+		loop: true,
+		grabCursor: true,
+		direction: 'horizontal',
+		modules: [Pagination],
+		navigation: { nextEl: '.swiper-next', prevEl: '.swiper-prev' },
+		keyboard: { enabled: true, onlyInViewport: false }
+	};
+
+	onMount(() => {
+		if (!stackBelow) return;
+		const mq = window.matchMedia(`(max-width: ${stackBelow - 1}px)`);
+		stacked = mq.matches;
+		const handler = (e: MediaQueryListEvent) => (stacked = e.matches);
+		mq.addEventListener('change', handler);
+		return () => mq.removeEventListener('change', handler);
+	});
+
+	// (re)initialise whenever the element appears
 	$effect(() => {
-		if (swiperEl) {
-			Object.assign(swiperEl, swiperParams);
-			swiperEl.initialize();
-		}
-		// if (activeProject.index === index) {
-		// 	activeProject.activeslide = swiperEl?.swiper?.activeIndex;
-		// }
+		if (!swiperEl) return;
+		Object.assign(swiperEl, { ...defaults, ...params });
+		swiperEl.initialize();
 	});
 </script>
 
-<swiper-container
-	bind:this={swiperEl}
-	init="false"
-	use:inView={{ threshold: 0.4, once: false }}
-	oninview={(e: CustomEvent) => handleInView(e.detail.visible)}
->
-	{#each images as img, i (i)}
-		<swiper-slide
-			onclick={() => {swiperEl?.swiper?.slideNext();}}
-			onpointerdown={() => {swiperEl?.swiper?.slideNext();}}
-			onkeydown={() => swiperEl?.swiper?.slideNext()}
-			role="button"
-			tabindex="0"
-		>
-			<Image image={img} maxh="80vh" />
-		</swiper-slide>
-	{/each}
-</swiper-container>
+{#if stacked}
+	<ul class="stack {className}">
+		{#each data as item, i (i)}
+			<li>{@render slide(item, i)}</li>
+		{/each}
+	</ul>
+{:else}
+	<div class="host {className}">
+		{#if nav}
+			<div class="swiper-nav">
+				<button type="button" class="swiper-prev" aria-label="Previous">&larr;</button>
+				<button type="button" class="swiper-next" aria-label="Next">&rarr;</button>
+			</div>
+		{/if}
+		<swiper-container bind:this={swiperEl} init="false">
+			{#each data as item, i (i)}
+				<swiper-slide>{@render slide(item, i)}</swiper-slide>
+			{/each}
+		</swiper-container>
+	</div>
+{/if}
 
 <style>
-	swiper-container {
-		height: calc(100vh - 3.6rem);
-		height: 100vh;
-		height: 100svh;
-		position: relative;
-		width: 100%;
-		/*background-color: white;*/
-	}
-	swiper-container:has(:nth-child(2)) {
-		cursor:
-			url('/Arrow.svg') 0 0,
-			auto;
-	}
-	swiper-slide {
-		/*aspect-ratio: 4 / 3;*/
-		height: calc(100vh - 3.6rem);
-		min-height: 100vh;
-	}
-	swiper-slide :global(figure) {
-		height: calc(100vh - 3.6rem);
-		height: 100vh;
-		height: 100svh;
+	/* Fills whatever box the parent gives it and never overflows it */
+	.host {
 		display: flex;
-		align-items: center;
-		padding: var(--pd-lg);
+		flex-direction: column;
+		height: 100%;
+		min-height: 0;
+		min-width: 0;
+		overflow: hidden;
 	}
-	@media screen and (min-width: 768px) {
-		/*swiper-container {
-			height: calc(100vh - 3.6rem);
-			height: calc(100svh - 3.6rem);
-		}
-		swiper-slide {
-			height: calc(100vh - 3.6rem);
-			height: calc(100svh - 3.6rem);
-		}*/
-		/* picture is set to 'content' in Image component, while we need to set it to block */
-		swiper-slide :global(figure) {
-			/*height: calc(100vh - 3.6rem);*/
-			/*height: calc(100svh - 3.6rem);*/
-			display: flex;
-			align-items: center;
-		}
+	swiper-container {
+		flex: 1;
+		min-height: 0;
+		width: 100%;
+		display: block;
+	}
+	swiper-container::part(wrapper) {
+		transition-timing-function: linear;
+	}
+	/* Slide = full height, width from content (slidesPerView: 'auto').
+	   Children size themselves via --fill-w / --fill-h (see Image.svelte). */
+	swiper-slide {
+		--fill-w: auto;
+		--fill-h: 100%;
+		width: auto;
+		height: 100%;
+		display: block;
+	}
+	swiper-slide > :global(*) {
+		height: 100%;
+	}
+
+	.stack {
+		display: grid;
+		gap: var(--space-main, 1rem);
+		grid-template-columns: 1fr;
+	}
+	.stack li {
+		--fill-w: 100%;
+		--fill-h: auto;
+	}
+
+	.swiper-nav {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.75rem;
+		padding: 0 var(--space-main, 1rem);
+		margin-bottom: var(--space-main, 1rem);
+	}
+	.swiper-next,
+	.swiper-prev {
+		font-weight: 900;
+		text-transform: capitalize;
+		cursor: pointer;
 	}
 </style>

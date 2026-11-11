@@ -1,0 +1,29 @@
+/* only hide when JS is on (the .js class from app.html) */
+@custom-variant js (.js &);
+
+@utility reveal-left  { --reveal-from: translateX(-3rem); }
+@utility reveal-right { --reveal-from: translateX(10rem); }
+@utility reveal-zoom  { --reveal-from: scale(0.92); }
+@utility reveal-flip  { --reveal-from: translateY(-5rem) rotate(-5deg); }
+@utility reveal-top  { --reveal-from: translateY(-20rem); }
+
+@utility reveal {
+	opacity: 0;
+	transform: var(--reveal-from, translateY(1.5rem));
+	transform-origin: bottom left;
+	transition:
+		opacity var(--opacity-duration, --duration, 0ms) var(--ease-1),
+		transform var(--duration, 300ms) var(--ease-2);
+	transition-delay: var(--reveal-delay, 0ms);
+
+	&[data-revealed] {
+		opacity: 1;
+		transform: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}

@@ -2,16 +2,10 @@
 
 /* Main + sidebar */
 @utility wrapper {
-    @apply grid grid-cols-(--grid-wrapper-cols) grid-rows-(--grid-wrapper-rows) min-h-dvh ;
-}
-@utility logo {
-    @apply col-start-1 row-start-1;
+    @apply grid grid-cols-(--grid-wrapper-cols) grid-rows-(--grid-wrapper-rows);
 }
 @utility main {
-    @apply col-start-1 row-start-2 ;
-}
-@utility sidebar {
-    @apply col-start-2 row-start-1 row-span-2 w-full font-marfa bg-gradient;
+    @apply col-start-1 row-start-1 min-h-0 min-w-0 md:overflow-hidden;
 }
 
 /* gradients */

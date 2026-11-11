@@ -13,24 +13,46 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
     --font-tz: "Timezone", serif;
     --font-marfa: "Marfa", sans-serif;
 
+    /* @link https://utopia.fyi/type/calculator?c=360,14,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+    --step--2: clamp(0.4774rem, 0.3606rem + 0.5194vw, 0.88rem);
+    --step--1: clamp(0.5729rem, 0.4199rem + 0.6801vw, 1.1rem);
+    --step-0: clamp(0.6875rem, 0.4879rem + 0.8871vw, 1.375rem);
+    --step-1: clamp(0.825rem, 0.5655rem + 1.1532vw, 1.7188rem);
+    --step-2: clamp(0.99rem, 0.6537rem + 1.4948vw, 2.1484rem);
+    --step-3: clamp(1.188rem, 0.7532rem + 1.9323vw, 2.6855rem);
+    --step-4: clamp(1.4256rem, 0.8649rem + 2.492vw, 3.3569rem);
+    --step-5: clamp(1.7107rem, 0.9891rem + 3.207vw, 4.1962rem);
+
+    /*--text-xs: var(--step-2);*/
+    --text-sm: var(--step--2);
     --text-large: clamp(1rem, 20vw, 8rem);
 
     /* spacing */
     --spacing-main: 1rem;
+    /* ease */
+    --ease-1: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-2: cubic-bezier(0.165, 0.84, 0.44, 1);
+	--ease-3: cubic-bezier(.86,.58,.82,1.04);
 
     /* bg gradient*/
-    --color-gradient-1: #99E1DB;
+    --color-gradient-1: var(--color-cyan-400);
     --color-gradient-2: #FFF;
+    --color-grey: #444444;
+    --color-lightgrey: #ADADAD;
 }
 @theme static {
-    --sidebar-w: clamp(180px, 20%, 380px);
-    --grid-wrapper-cols: 1fr var(--sidebar-w);
-    --grid-wrapper-rows: auto 1fr;
+    --sidebar-w: clamp(300px, 25vw, 350px);
+    --interface-cols: calc(100vw - var(--sidebar-w)) var(--sidebar-w);
+    --grid-wrapper-rows: auto minmax(0, 1fr);
 }
 
 @view-transition {
   navigation: auto;
 }
 body {
-    @apply font-marfa min-h-dvh bg-linear-to-t from-gradient-1 to-gradient-2;
+    @apply font-marfa min-h-dvh;
+}
+body::after{
+    content: '';
+    @apply fixed z-[-2] inset-0 bg-gradient-reverse;
 }

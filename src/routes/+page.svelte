@@ -1,14 +1,45 @@
 <script lang="ts">
-let { data } = $props();
+import { page } from '$app/state';
 import Image from "#lib/components/Image.svelte"
-// import cover from "#lib/assets/cover2.jpg"
+import reveal from "#lib/utils/reveal.js"
 
+// 3. state
+const hll = $derived(page.data.pageData?.highlights.length)
+let nth = $state(0)
+// let shownav = $state(false)
+function next() {
+    if (!hll) return;
+    nth = (nth + 1) % hll;
+}
+function prev() {
+    if (!hll) return;
+    nth = (nth - 1 + hll) % hll;
+}
+
+// 3. DATA DEBUG
+import Datarow from '#lib/components/data/row.svelte'
+import Datawrapper from '#lib/components/data/wrapper.svelte'
 </script>
-<div>
-    <figure class="h-full">
-        <Image image={ data.pageData?.highlights[0].cover} />
-        <figcaption class="bg-white px-2 z-100 absolute bottom-5 left-5">
-            { data.pageData?.highlights[0].title}, { data.pageData.highlights[0].artists}, { data.pageData.highlights[0].startdate}
-        </figcaption>
-    </figure>
+<div class="h-full relative">
+    {#if hll > 1}
+    <div class="absolute left-0 top-0 z-200 text-black backdrop-blur-md flex gap-main p-main text-sm">
+        <button class=" font-black cursor-pointer" onclick={prev}>&larr;</button>
+        <span class=" font-black">{nth + 1}/{hll}</span>
+        <button class=" font-black cursor-pointer" onclick={next}>&rarr;</button>
+    </div>
+    {/if}
+    {#key nth}
+    <div use:reveal={{delay: 0, duration: '400ms', opacityDuration: '0ms'}} class="h-full js:reveal reveal-right">
+        <Image image={page.data.pageData.highlights[nth].cover} ratio="inherit" />
+    </div>
+    {/key}
 </div>
+
+<!-- DATA DEBUG -->
+{#if page.data.devmode}
+    {#snippet datarows()}
+        <Datarow data={JSON.stringify(page.data.pageData, null, 2)} sum="page" />
+        <Datarow data={JSON.stringify(page.data.layoutData, null, 2)} sum="layout" />
+    {/snippet}
+    <Datawrapper content={datarows}/>
+{/if}

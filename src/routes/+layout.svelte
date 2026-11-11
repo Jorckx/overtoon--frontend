@@ -1,46 +1,54 @@
 <script lang="ts">
-    // import type { Path } from '$app/types';
-    import '../app.css';
-    import { resolve } from '$app/paths';
-    import { localizeHref } from '#lib/paraglide/runtime.js';
+    // 1. Components
     let { data, children } = $props();
-    // import { page } from '$app/state';
-    // import favicon from '#lib/assets/favicon.svg';
-    //
+    import { page } from '$app/state';
+    import '#lib/styles/app.css';
+   	import { register } from 'swiper/element/bundle';
+	register()
+    import { resolve } from '$app/paths';
+    import { localizeHref, deLocalizeHref } from '#lib/paraglide/runtime.js';
+
     // 2. Components
     import Ooo from '#lib/components/Ooo.svelte';
     import Menu from '#lib/components/Menu.svelte';
+    import Statusbar from '#lib/components/Statusbar.svelte';
     import Seo from '#lib/components/Seo.svelte';
-    import Logo from '#lib/components/Logo.svelte';
+    import Logo from '#lib/components/LogoAnimated.svelte';
+    // import StickyO from '#lib/components/StickyO.svelte';
 
     // 3. states
+    const currentPath = $derived(page.url.pathname)
+    const hideSidebar = $derived(deLocalizeHref(currentPath) !== '/')
 	let hh = $state<number>(0)
 	let sbh = $derived(hh + 3)
 </script>
 
 <Seo globalseo={data.layoutData?.seo} isdev={data.devmode} />
 
-<div class="wrapper">
-    <!-- header -->
-    <a
-        href={resolve(localizeHref('/'))}
-        class="logo z-100 border-b-3 p-main"
-        bind:clientHeight={hh}
-    ><Logo /></a>
-
-    {#if hh}
-    <header
-        class="sidebar"
-        style="--hh: {sbh}px"
-    >
+<header bind:clientHeight={hh} class="sticky w-dvw top-0 z-900 grid grid-cols-(--interface-cols) grid-rows-1 h-fit">
+    <a href={resolve(localizeHref('/'))} class="z-100 h-full border-b-3 p-main">
+        <Logo duration={3000} interval={10000} />
+        <!-- <StickyO /> -->
+    </a>
+    <nav class="w-full" style="--hh: {sbh}px">
         <Menu />
-    </header>
-    {/if}
+    </nav>
+</header>
 
-    <!-- main -->
+{#if hh}
+<div class="grid h-[calc(100dvh-var(--hh))] grid-cols-(--interface-cols) grid-rows-1 overflow-hidden" class:sidebar-hidden={hideSidebar} style="--hh: {hh}px">
     <main class="main">
         {@render children()}
-        <Ooo/>
+        <Ooo {hideSidebar} />
     </main>
-    <!-- <Sidebar /> -->
+    <div class="overflow-hidden">
+        <Statusbar hide={hideSidebar} />
+    </div>
 </div>
+{/if}
+
+<style>
+    .sidebar-hidden {
+        --interface-cols: 1fr 0fr !important; /* your "hidden" columns */
+    }
+</style>

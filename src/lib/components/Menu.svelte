@@ -9,8 +9,8 @@
 
 	// let hh = $state()
 </script>
-<div class="p-main pb-0 h-(--hh) sticky top-0">
-    <div class="border-b-3 flex w-full justify-between h-full">
+<div class="p-main pb-0 h-full">
+    <div class="border-b-3 flex gap-x-4 w-full justify-between h-full">
         <!-- language switch -->
         <nav aria-label={page.data.layoutData?.ui?.languages ?? 'Languages'}>
           <ul class="flex opacity-25">

@@ -27,6 +27,20 @@ export async function load({ url, locals }) {
   const page = layoutData?.result ?? layoutData;
   if (!page) throw error(404, 'Page not found…');
 
+  const activitiesByArtist = new Map<string, { id: string; title: string }[]>();
+
+  for (const activity of page.activities) {
+    for (const artist of activity.artists ?? []) {
+      const list = activitiesByArtist.get(artist.id) ?? [];
+      list.push({ id: activity.id, title: activity.title });
+      activitiesByArtist.set(artist.id, list);
+    }
+  }
+  const residents = (page.residents ?? []).map((resident) => ({
+    ...resident,
+    activities: activitiesByArtist.get(resident.id) ?? [],
+  }));
+
   // Cache-Tag for this page. The hook sends it with the response (hooks.server.ts && app.d.ts).
   locals.cacheTags.add(`page:${deLocalizeUrl(url)}`);
   console.log('cachetag:', locals.cacheTags)
@@ -34,6 +48,7 @@ export async function load({ url, locals }) {
   return {
     layoutData,
     devmode,
+    residents,
     isPreview: !!preview,
     metamessage: url.pathname.slice(1)
   };

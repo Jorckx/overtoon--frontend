@@ -2,15 +2,14 @@ import { error } from '@sveltejs/kit';
 import { useKqlQuery, getPreview, withPreview } from '#lib/utils/useKirby.js';
 // import { getLang, stripLang } from '#lib/utils/i18n.js';
 import { getLocale, deLocalizeUrl } from '#lib/paraglide/runtime.js';
-import { pageQuery } from './query.js';
-import type { pageQueryType } from './query.js';
+import { pageQuery, type pageQueryType } from './query.js';
+// import type { pageChildrenType } from './query.js';
 
 export const prerender = false;
 
 export async function load({ url, locals }) {
   const lang = getLocale();
   const preview = getPreview(url);
-  // const pageId = stripLang(url.pathname).replace(/^\/|\/$/g, '');
 
   // query with preview wrapper to iddentify preview-query (hooks >> cache-control: no-store)
   const pageData: pageQueryType = await useKqlQuery(withPreview(pageQuery, preview), lang);
@@ -19,7 +18,7 @@ export async function load({ url, locals }) {
 
   // Cache-Tag for this page. The hook sends it with the response (hooks.server.ts && app.d.ts).
   locals.cacheTags.add(`page:${deLocalizeUrl(url)}`);
-  console.log('cachetag:', locals.cacheTags)
+  // console.log('cachetag:', locals.cacheTags)
 
   return {
     pageData,

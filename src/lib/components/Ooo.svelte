@@ -3,8 +3,9 @@
 
   let {
     color = '#000',
+    hideSidebar = false,
     range = [0.4, .8]
-  }: { color?: string; range?: [number, number] } = $props();
+  }: { color?: string; range?: [number, number], hideSidebar?: boolean } = $props();
 
   // Base sizes in vmin units, plus how each shape reacts to the cursor.
   //  invW / invH: reverse the direction for counter-motion
@@ -91,7 +92,7 @@
 <!-- pointermove covers mouse, pen and touch -->
 <svelte:window onpointermove={onPointerMove} onresize={wake} />
 
-<div class="resonance" class:ready aria-hidden="true" style:--color={color}>
+<div class="resonance" class:ready class:hideSidebar aria-hidden="true" style:--color={color}>
   {#each sizes as s, i (i)}
     <div
       class="shape"
@@ -103,27 +104,30 @@
 </div>
 
 <style>
-    @reference "../../app.css";
+    @reference "#lib/styles/app.css";
     .resonance {
         @apply left-main z-300 fixed flex justify-end gap-[1.6vmin] items-end right-(--sidebar-w) pr-main bottom-main pointer-events-none opacity-80;
-        transition: opacity 0.4s;
+        transition: opacity 0.4s, right 0.4s;
     }
 
-  .resonance.ready {
+    .resonance.hideSidebar{
+        @apply right-main;
+    }
+    .resonance.ready {
     opacity: 80%;
-  }
+    }
 
-  .shape {
+    .shape {
     flex: none;
     background: var(--color);
     border-radius: 50%;
-  }
+    }
 
-  /* ring: ellipse with a transparent elliptical hole, so the wall thickness
-     changes naturally with the proportions */
-  .ring {
+    /* ring: ellipse with a transparent elliptical hole, so the wall thickness
+        changes naturally with the proportions */
+    .ring {
     --mask: radial-gradient(ellipse 27.5% 30.5% at 50% 50%, transparent 98%, #000 100%);
     -webkit-mask: var(--mask);
     mask: var(--mask);
-  }
+    }
 </style>

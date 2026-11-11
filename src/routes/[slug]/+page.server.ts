@@ -9,7 +9,8 @@ export const prerender = false;
 export async function load({ url, locals }) {
   const lang = getLocale();
   const preview = getPreview(url);
-  const pageId = deLocalizeUrl(url).pathname.replace(/^\/|\/$/g, '');
+  // const pageId = deLocalizeUrl(url).pathname.replace(/^\/|\/$/g, '');
+  const pageId = deLocalizeUrl(url).pathname;
 
   // query with preview wrapper to iddentify preview-query (hooks >> cache-control: no-store)
   const pageData: pageQueryType = await useKqlQuery(withPreview(getPageQuery(pageId), preview), lang);
