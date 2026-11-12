@@ -25,7 +25,8 @@
 
 <Seo globalseo={data.layoutData?.seo} isdev={data.devmode} />
 
-<header bind:clientHeight={hh} class="sticky w-dvw top-0 z-900 grid grid-cols-(--interface-cols) grid-rows-1 h-fit">
+<div class="grid h-dvh grid-rows-(--grid-wrapper-rows) overflow-hidden">
+<header bind:clientHeight={hh} class="sticky top-0 z-900 grid grid-cols-(--interface-cols) grid-rows-1 h-fit">
     <a href={resolve(localizeHref('/'))} class="z-100 h-full border-b-3 p-main">
         <Logo duration={3000} interval={10000} />
         <!-- <StickyO /> -->
@@ -35,8 +36,7 @@
     </nav>
 </header>
 
-{#if hh}
-<div class="grid h-[calc(100dvh-var(--hh))] grid-cols-(--interface-cols) grid-rows-1 overflow-hidden" class:sidebar-hidden={hideSidebar} style="--hh: {hh}px">
+<div class="grid min-h-0 grid-cols-(--interface-cols) grid-rows-1 overflow-hidden" class:sidebar-hidden={hideSidebar} style="--hh: {hh}px">
     <main class="main">
         {@render children()}
         <Ooo {hideSidebar} />
@@ -45,7 +45,7 @@
         <Statusbar hide={hideSidebar} />
     </div>
 </div>
-{/if}
+</div>
 
 <style>
     .sidebar-hidden {

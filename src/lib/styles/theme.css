@@ -42,12 +42,15 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
 }
 @theme static {
     --sidebar-w: clamp(300px, 25vw, 350px);
-    --interface-cols: calc(100vw - var(--sidebar-w)) var(--sidebar-w);
+    --interface-cols: minmax(0, 1fr) var(--sidebar-w);
     --grid-wrapper-rows: auto minmax(0, 1fr);
 }
 
 @view-transition {
   navigation: auto;
+}
+html, body {
+    overflow: clip;
 }
 body {
     @apply font-marfa min-h-dvh;
