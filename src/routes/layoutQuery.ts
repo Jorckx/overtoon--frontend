@@ -87,7 +87,7 @@ export const layoutQuery = {
           query: 'page.periods.toStructure',
           select: {
             start: 'structureItem.start',
-            end: 'structureItem.end.toDate',
+            end: 'structureItem.end',
             links: true
           }
         }

@@ -7,6 +7,7 @@ import { error } from '@sveltejs/kit';
 
 import { useKqlQuery, getPreview, withPreview } from '#lib/utils/useKirby.js';
 import { getLocale, deLocalizeUrl } from '#lib/paraglide/runtime.js';
+import { splitResidents } from '#lib/utils/residents.js';
 import { layoutQuery, type layoutQueryType } from './layoutQuery.js';
 
 export const prerender = false;
@@ -36,10 +37,13 @@ export async function load({ url, locals }) {
       activitiesByArtist.set(artist.id, list);
     }
   }
-  const residents = (page.residents ?? []).map((resident) => ({
-    ...resident,
-    activities: activitiesByArtist.get(resident.id) ?? [],
-  }));
+  const { residents, mode: residentsMode } = splitResidents(
+    (page.residents ?? []).map((resident) => ({
+      ...resident,
+      activities: activitiesByArtist.get(resident.id) ?? [],
+    })),
+    Date.now()
+  );
 
   // Cache-Tag for this page. The hook sends it with the response (hooks.server.ts && app.d.ts).
   locals.cacheTags.add(`page:${deLocalizeUrl(url)}`);
@@ -49,6 +53,7 @@ export async function load({ url, locals }) {
     layoutData,
     devmode,
     residents,
+    residentsMode,
     isPreview: !!preview,
     metamessage: url.pathname.slice(1)
   };

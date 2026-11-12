@@ -5,7 +5,7 @@
     let { hide = false} = $props()
     import reveal from '#lib/utils/reveal.js';
     import { fade } from 'svelte/transition';
-   	import { formatDate } from '#lib/utils/date.js';
+   	import { formatDate, DATE_FORMATS } from '#lib/utils/date.js';
 
 
     // 3. state
@@ -19,22 +19,30 @@
         if (!nwsl) return;
         nth = (nth - 1 + nwsl) % nwsl;
     }
+
+    // 4. residents (current/past split is done in +layout.server.ts)
+    const visibleResidents = $derived(page.data.residents ?? []);
+    const showingPast = $derived(page.data.residentsMode === 'past');
 </script>
 <!-- SNIPPETS -->
 {#snippet residents()}
-    {const residents = [...page.data.residents, ...page.data.residents]}
-    <ul>
-        {#each residents as resident, i (i)}
-            <li class="not-last:border-b border-lightgrey flex gap-4 justify-between py-[2px]">
-                <a href={resolve(resident.id)}>
-                    {resident.title}
-                </a>
-                <span class="opacity-35 font-tz-mono">
-                    {formatDate(resident.periods[0].start)}
-                </span>
-            </li>
-        {/each}
-    </ul>
+    <header class="sidebar-header justify-end">
+        <h3>{showingPast ? 'past' : 'current'} residents</h3>
+    </header>
+    <div class="sidebar-content">
+        <ul>
+            {#each visibleResidents as resident (resident.id)}
+                <li class="not-last:border-b border-lightgrey flex gap-4 justify-between py-0.5">
+                    <a href={resolve(resident.id)}>
+                        {resident.title}
+                    </a>
+                    <span class="opacity-35 font-tz-mono">
+                        {#if resident.period.start}{formatDate(resident.period.start, DATE_FORMATS.compact)}{/if}{#if resident.period.end} – {formatDate(resident.period.end, DATE_FORMATS.compact)}{/if}
+                    </span>
+                </li>
+            {/each}
+        </ul>
+    </div>
 {/snippet}
 {#snippet updates()}
     <div class="grid">
@@ -85,14 +93,11 @@
                 </div>
             </figure>
             {/if}
+            {#if visibleResidents.length}
             <figure class="sidebar-section">
-                <header class="sidebar-header justify-end">
-                    <h3>past residents</h3>
-                </header>
-                <div class="sidebar-content">
-                    {@render residents()}
-                </div>
+                {@render residents()}
             </figure>
+            {/if}
             <figure class="sidebar-section">
                 <header class="sidebar-header justify-end">
                     <h3>subscribe</h3>
