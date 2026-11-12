@@ -73,7 +73,7 @@
 {/snippet}
 
 <!-- MARKUP -->
-<aside class="sticky w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0" class:hide>
+<aside class="sticky w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0" class:hide data-hidden={hide}>
     <!-- inner -->
     <div use:reveal={{delay: 300, duration: '300ms', opacityDuration: '200ms'}} class="js:reveal reveal-right p-main w-full h-full flex flex-col justify-between gap-y-8">
         <!-- headline -->

@@ -20,7 +20,8 @@ function prev() {
 import Datarow from '#lib/components/data/row.svelte'
 import Datawrapper from '#lib/components/data/wrapper.svelte'
 </script>
-<div class="h-full relative">
+<!-- clip the highlightso no more overflow -->
+<div class="h-[calc(100dvh-var(--hh))] overflow-clip relative">
     {#if hll > 1}
     <div class="absolute left-0 top-0 z-200 text-black backdrop-blur-md flex gap-main p-main text-sm">
         <button class=" font-black cursor-pointer" onclick={prev}>&larr;</button>

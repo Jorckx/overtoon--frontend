@@ -89,7 +89,7 @@
 			class:loaded
 			style:object-fit={fit}
 			style:aspect-ratio={ratio}
-			style:height={ratio ? 'auto' : undefined}
+			style:height={ratio ? '100%' : undefined}
 			style:transition-delay="{delay}s"
 			onload={handleLoad}
 			onerror={() => console.warn('Failed to load image:', src)}

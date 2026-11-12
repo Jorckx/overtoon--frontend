@@ -8,6 +8,7 @@
 </script>
 {#if page.data.pageData}
     <div class="p-main h-[200vh]">
+    <div class="w-10 bg-red-600 h-dvh"></div>
     <h1>{page.data.pageData.title}</h1>
     <h1>{page.data.pageData.intro}</h1>
     <Blocks />

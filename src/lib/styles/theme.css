@@ -49,9 +49,7 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
 @view-transition {
   navigation: auto;
 }
-html, body {
-    overflow: clip;
-}
+
 body {
     @apply font-marfa min-h-dvh;
 }
