@@ -74,6 +74,7 @@
         </div>
         <!-- sections -->
         <div class="flex flex-col justify-end gap-y-8">
+            {#if page.data.layoutData?.news.length }
             <figure class="sidebar-section">
                 <header class="sidebar-header flex justify-between">
                     {@render updatesNav()}
@@ -83,6 +84,7 @@
                     {@render updates()}
                 </div>
             </figure>
+            {/if}
             <figure class="sidebar-section">
                 <header class="sidebar-header justify-end">
                     <h3>past residents</h3>
