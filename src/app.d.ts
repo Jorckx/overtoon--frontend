@@ -11,6 +11,9 @@ declare global {
     interface Locals {
     	cacheTags: Set<string>;
     }
+    interface Window {
+      dataLayer: any[];
+    }
 
 		// interface Error {}
 		// interface Locals {}

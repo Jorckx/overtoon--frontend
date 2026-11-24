@@ -6,5 +6,6 @@ export const variables = defineEnvVars({
   KIRBY_BEARER_TOKEN: { schema: (input) => input ?? '' },
   AUTH: { schema: (input) => input ?? '' },
   MODE: { schema: (input) => input ?? '' },
-	ADMIN_LOGIN: { schema: (input) => input ?? '' }
+  ADMIN_LOGIN: { schema: (input) => input ?? '' },
+  MAILCHIMP_API_KEY: { schema: (input) => input ?? '' }
 });

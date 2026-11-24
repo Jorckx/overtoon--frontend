@@ -1,31 +1,5 @@
 <!-- Image.svelte -->
 <script lang="ts">
-	interface ImageData {
-		width: number;
-		height: number;
-		srcset: string;
-		webp: string;
-		url: string;
-		alt?: string;
-		name: string;
-		type: string;
-	}
-
-	interface Props {
-		image?: ImageData;
-		/** External image instead of `image` */
-		web?: boolean;
-		websrc?: string;
-		webalt?: string;
-		/** Optional aspect-ratio override ('16/9', 1.5 …). Omit to fill the parent. */
-		ratio?: string | number;
-		fit?: string;
-		sizes?: string;
-		eager?: boolean;
-		delay?: number;
-		onload?: () => void;
-	}
-
 	let {
 		image,
 		web = false,
@@ -36,8 +10,9 @@
 		sizes = '100vw',
 		eager = false,
 		delay = 0,
+		masked = false,
 		onload
-	}: Props = $props();
+	} = $props();
 
 	let imgEl: HTMLImageElement | undefined = $state();
 	let loaded = $state(false);
@@ -91,6 +66,7 @@
 			style:aspect-ratio={ratio}
 			style:height={ratio ? '100%' : undefined}
 			style:transition-delay="{delay}s"
+			class:rounded-[100%]={masked}
 			onload={handleLoad}
 			onerror={() => console.warn('Failed to load image:', src)}
 		/>

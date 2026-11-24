@@ -1,47 +1,78 @@
 <script lang="ts">
-    // 1. Components
-    let { data, children } = $props();
-    import { page } from '$app/state';
-    import '#lib/styles/app.css';
-   	import { register } from 'swiper/element/bundle';
-	register()
-    import { deLocalizeHref } from '#lib/paraglide/runtime.js';
+	let { data, children } = $props();
+	import { page } from '$app/state';
+	import { onNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import '#lib/styles/app.css';
+	import { register } from 'swiper/element/bundle';
+	import { deLocalizeHref } from '#lib/paraglide/runtime.js';
 
-    // 2. Components
-    import Ooo from '#lib/components/Ooo.svelte';
-    import Statusbar from '#lib/components/Statusbar.svelte';
-    import Seo from '#lib/components/Seo.svelte';
-    import Header from '#lib/components/Header.svelte';
-    // import StickyO from '#lib/components/StickyO.svelte';
+	import Ooo from '#lib/components/Ooo.svelte';
+	import Seo from '#lib/components/Seo.svelte';
+	import Header from '#lib/components/Header.svelte';
+	import Footer from '#lib/components/Footer.svelte';
+	import Consent from '#lib/components/Consent.svelte';
 
-    // 3. states
-    const currentPath = $derived(page.url.pathname)
-    const hideSidebar = $derived(deLocalizeHref(currentPath) !== '/')
-	let hh = $state<number>(0)
+	register();
+	// shared by the page (/artists) and the sidebar filter, which are siblings
+
+	// 3. STATE
+	const path = $derived(deLocalizeHref(page.url.pathname));
+	const OooToRight = ['/artists'];
+	const hasFooter = ['/about'];
+    const slideOoo = $derived(OooToRight.includes(path))
+	let hh = $state(0);
+
+	// 3. ON NAVIGATE
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
+
+	// 3. ONMOUNT
+	onMount(() => {
+		const hash = location.hash;
+		if (!hash) return;
+		setTimeout(() => {
+			document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}, 300);
+	});
+
+	// 3. DATA DEBUG
+	import Datarow from '#lib/components/data/row.svelte'
+	import Datawrapper from '#lib/components/data/wrapper.svelte'
 </script>
 
+<!-- SEO / GDPR -->
 <Seo globalseo={data.layoutData?.seo} isdev={data.devmode} />
+<Consent production={!data.devmode} />
 
-<div class="">
-    <header bind:clientHeight={hh} class="sticky top-0 z-900 grid lg:grid-cols-(--interface-cols) grid-rows-1 h-fit">
-        <Header />
-    </header>
-    {#if hh}
-    <div class="grid min-h-0 lg:grid-cols-(--interface-cols) grid-rows-1 h-fit" style="--hh: {hh}px">
-        <main class="main" class:scrollable={hideSidebar}>
-            {@render children()}
-            <Ooo {hideSidebar} />
-        </main>
-        <div class="overflow-hidden hidden lg:block">
-            <Statusbar hide={hideSidebar} />
-        </div>
-    </div>
-    {/if}
-</div>
+<!-- MARKUP -->
+<header bind:clientHeight={hh} class="sticky top-0 z-900 h-fit">
+	<Header />
+</header>
 
-<style>
+{#if hh}
+<main style:--hh="{hh}px" class="h-[calc(100dvh-var(--hh))]">
+	{@render children()}
+</main >
+{/if}
 
-    .sidebar-hidden {
-        --interface-cols: 1fr 0fr !important; /* your "hidden" columns */
-    }
-</style>
+<!-- Ooo -->
+<Ooo {slideOoo} />
+
+{#if hasFooter.includes(path)}
+	<Footer />
+{/if}
+
+<!-- DATA DEBUG -->
+<!-- {#snippet datarows()}
+	<Datarow data={JSON.stringify(page.data.pageData, null, 2)} sum="page data" />
+	<Datarow data={JSON.stringify(page.data.layoutData, null, 2)} sum="layout data" />
+{/snippet}
+<Datawrapper content={datarows} /> -->

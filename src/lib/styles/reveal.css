@@ -9,7 +9,7 @@
 
 @utility reveal {
 	opacity: 0;
-	transform: var(--reveal-from, translateY(1.5rem));
+	transform: var(--reveal-from);
 	transform-origin: bottom left;
 	transition:
 		opacity var(--opacity-duration, --duration, 0ms) var(--ease-1),

@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { localizeHref } from '#lib/paraglide/runtime.js';
+  import { resolve } from '$app/paths';
 
   interface Props {
     /** Duration of one transition in ms */
@@ -13,6 +15,7 @@
     paused?: boolean;
     label?: string;
     class?: string;
+    hide?: boolean;
   }
 
   let {
@@ -22,7 +25,8 @@
     gap = 14,
     paused = false,
     label = 'Overtoon',
-    class: className = ''
+    class: className = '',
+    hide = false,
   }: Props = $props();
 
   // bound letter paths
@@ -96,6 +100,13 @@
     return () => clearTimeout(timer);
   });
 </script>
+<a
+  href={resolve(localizeHref('/'))}
+  class="block w-full"
+  class:pointer-events-none={hide}
+  tabindex={hide ? -1 : undefined}
+  aria-hidden={hide ? 'true' : undefined}
+>
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -103,10 +114,17 @@
   role="img"
   aria-label={label}
   class={className}
+  class:hide
   style:--duration="{duration}ms"
   style:--easing={easing}
 >
   <g fill="currentColor">
+    <!-- o (first letter) -->
+    <path
+        class="first-o hidden"
+        bind:this={o1}
+        d="M33.62,36.33c-12.14,0-18.78-4.55-18.78-10.54s7.51-8.61,16.77-8.61c12.02,0,18.65,4.55,18.65,10.54s-7.39,8.61-16.65,8.61M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15"
+    />
     <!-- v -->
     <path
       d="M109.45,53.61h-4.98c-.83,0-1.07-.23-1.42-1.06l-22.51-33.55c-.59-1.29-.83-1.76-2.37-1.76h-2.01c-.71,0-1.07-.35-1.07-1.06v-4.22c0-.7.36-1.06,1.07-1.06h25.47c.71,0,1.07.35,1.07,1.06v4.22c0,.7-.35,1.06-1.07,1.06h-4.15c-.83,0-1.06.12-1.66.82l-1.54,1.99c-.47.7-.47,1.17-.12,2l13.98,19.57c.47,1.17,1.3,1.17,1.89,0l14.46-19.81c.35-.82.47-1.29,0-2l-1.31-1.76c-.47-.71-.83-.82-2.25-.82h-3.79c-.71,0-1.07-.35-1.07-1.06v-4.22c0-.7.36-1.06,1.07-1.06h20.14c.71,0,1.06.35,1.06,1.06v4.22c0,.7-.35,1.06-1.06,1.06h-1.78c-1.07,0-1.54.35-2.01,1.52l-22.75,33.78c-.36.82-.47,1.06-1.3,1.06"
@@ -134,11 +152,7 @@
       class="move"
       d="M554.98,63.92c-12.15,0-18.78-4.55-18.78-10.54s7.51-8.61,16.78-8.61c12.02,0,18.65,4.55,18.65,10.54s-7.39,8.61-16.65,8.61M586.48,54.14c0-8.6-12.23-15.78-31.97-15.78s-33.15,7.25-33.15,16.21,12.37,15.72,31.83,15.72,33.28-7.18,33.28-16.15"
     />
-    <!-- o (first letter) -->
-    <path
-      bind:this={o1}
-      d="M33.62,36.33c-12.14,0-18.78-4.55-18.78-10.54s7.51-8.61,16.77-8.61c12.02,0,18.65,4.55,18.65,10.54s-7.39,8.61-16.65,8.61M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15"
-    />
+
     <!-- n -->
     <path
       bind:this={n}
@@ -146,15 +160,29 @@
     />
   </g>
 </svg>
+</a>
 
 <style>
   svg {
     display: block;
-    width: 100%;
-    height: auto;
+    /*width: 100%;*/
+    /*height: 6.73rem;*/
+    height: 100%;
     overflow: visible;
+    transform-origin: top left;
+    transition: transform 200ms;
   }
   .move {
-    transition: transform var(--duration) var(--easing);
+    transition: opacity 200ms, transform var(--duration) var(--easing);
+  }
+  svg > g > path {
+      transition: opacity 400ms, transform 300ms;
+  }
+  svg.hide {
+      /*transform: scale(0.8);*/
+  }
+  svg.hide > g > path {
+      opacity: 0;
+      transform: translateY(-0.3rem);
   }
 </style>

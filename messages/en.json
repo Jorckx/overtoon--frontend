@@ -1,4 +1,9 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+	"hello_world": "Hello, {name} from en!",
+
+	"nav_aria": "Main",
+	"footer_nav_aria": "Footer",
+	"lang_aria": "Languages"
+
 }

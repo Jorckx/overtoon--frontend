@@ -15,3 +15,17 @@
 @utility bg-gradient-reverse {
     @apply bg-linear-to-t from-gradient-1 to-gradient-2;
 }
+
+/* Filled shape: image only shows inside the blob */
+@utility mask-filled {
+  aspect-ratio: 65.12 / 31.93;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 10.77 65.12 31.93'%3E%3Cpath d='M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 10.77 65.12 31.93'%3E%3Cpath d='M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+/* Ring shape: same blob with the center cut out, like the letter "o" */
+@utility mask-ring {
+  aspect-ratio: 65.12 / 31.93;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 10.77 65.12 31.93'%3E%3Cpath fill-rule='evenodd' d='M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15zM33.62,36.33c-12.14,0-18.78-4.55-18.78-10.54s7.51-8.61,16.77-8.61c12.02,0,18.65,4.55,18.65,10.54s-7.39,8.61-16.65,8.61z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 10.77 65.12 31.93'%3E%3Cpath fill-rule='evenodd' d='M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15zM33.62,36.33c-12.14,0-18.78-4.55-18.78-10.54s7.51-8.61,16.77-8.61c12.02,0,18.65,4.55,18.65,10.54s-7.39,8.61-16.65,8.61z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}

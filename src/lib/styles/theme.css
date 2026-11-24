@@ -25,10 +25,14 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
 
     /*--text-xs: var(--step-2);*/
     --text-sm: var(--step--2);
-    --text-large: clamp(1rem, 20vw, 8rem);
+    --text-base: var(--step--1);
+    --text-md: var(--step-2);
+    --text-lg: clamp(1rem, 20vw, 8rem);
 
     /* spacing */
+    --spacing-lg: 4rem;
     --spacing-main: 1rem;
+    --spacing-sm: 0.5rem;
     /* ease */
     --ease-1: cubic-bezier(0.4, 0, 0.2, 1);
 	--ease-2: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -41,7 +45,7 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
     --color-lightgrey: #ADADAD;
 }
 @theme static {
-    --sidebar-w: clamp(300px, 25vw, 350px);
+    --sidebar-w: clamp(260px, 22vw, 350px);
     --interface-cols: minmax(0, 1fr) var(--sidebar-w);
     --grid-wrapper-rows: auto minmax(0, 1fr);
 }
@@ -51,9 +55,19 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
 }
 
 body {
-    @apply font-marfa min-h-dvh;
+    @apply font-marfa min-h-dvh text-base;
 }
 body::after{
     content: '';
     @apply fixed z-[-2] inset-0 bg-gradient-reverse;
+}
+
+/* No visible scrollbars anywhere, scrolling still works */
+* {
+  scrollbar-width: none;        /* Firefox, Chrome 121+, Safari 18.2+ */
+  -ms-overflow-style: none;     /* old Edge / IE */
+}
+
+*::-webkit-scrollbar {
+  display: none;                /* older Chrome / Safari */
 }

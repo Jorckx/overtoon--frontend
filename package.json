@@ -18,6 +18,7 @@
 		"gen": "wrangler types"
 	},
 	"devDependencies": {
+		"@beyonk/gdpr-cookie-consent-banner": "^16.0.3",
 		"@eslint/js": "^10.0.1",
 		"@inlang/paraglide-js": "^2.18.2",
 		"@sveltejs/adapter-cloudflare": "^8.0.0",

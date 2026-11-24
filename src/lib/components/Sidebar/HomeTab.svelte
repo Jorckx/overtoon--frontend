@@ -1,12 +1,13 @@
+
 <script lang="ts">
     // 1. internal
     import { page } from '$app/state';
     import { resolve } from '$app/paths';
-    let { hide = false} = $props()
-    import reveal from '#lib/utils/reveal.js';
     import { fade } from 'svelte/transition';
    	import { formatDate, DATE_FORMATS } from '#lib/utils/date.js';
 
+    // 3. components
+	import Subscribe from '#lib/components/Subscribe.svelte';
 
     // 3. state
     const nwsl: number = $derived(page.data.layoutData?.news.length)
@@ -24,6 +25,7 @@
     const visibleResidents = $derived(page.data.residents ?? []);
     const showingPast = $derived(page.data.residentsMode === 'past');
 </script>
+
 <!-- SNIPPETS -->
 {#snippet residents()}
     <header class="sidebar-header justify-end">
@@ -32,7 +34,7 @@
     <div class="sidebar-content">
         <ul>
             {#each visibleResidents as resident (resident.id)}
-                <li class="not-last:border-b border-lightgrey flex gap-4 justify-between py-0.5">
+                <li class="not-last:border-b border-black/10 flex gap-4 justify-between py-0.5">
                     <a href={resolve(resident.id)}>
                         {resident.title}
                     </a>
@@ -54,7 +56,7 @@
                 in:fade={{ duration: 100, delay: 100 }}
                 out:fade={{ duration: 100 }}
             >
-                <li class="italic text-tz text-purple-500">{newsitems[nth].category}</li>
+                <li class="text-tz text-purple-500">{newsitems[nth].category}</li>
                 {#if newsitems[nth].highlightSum}
                     <li>{newsitems[nth]?.highlightSum}</li>
                 {/if}
@@ -71,70 +73,33 @@
         <button onclick={next} class="cursor-pointer font-bold">&rarr;</button>
     </div>
 {/snippet}
-
-<!-- MARKUP -->
-<aside class="sticky w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0" class:hide data-hidden={hide}>
-    <!-- inner -->
-    <div use:reveal={{delay: 300, duration: '300ms', opacityDuration: '200ms'}} class="js:reveal reveal-right p-main w-full h-full flex flex-col justify-between gap-y-8">
-        <!-- headline -->
-        <div class="font-tz">
-            {page.data.layoutData?.headline}
+<!-- Markup -->
+<!-- headline -->
+<div class="font-tz">
+    {page.data.layoutData?.headline}
+</div>
+<!-- sections -->
+<div class="flex flex-col justify-end gap-y-lg">
+    {#if page.data.layoutData?.news.length }
+    <figure class="sidebar-section">
+        <header class="sidebar-header flex justify-between">
+            {@render updatesNav()}
+            <h3><a href="/updates">updates</a></h3>
+        </header>
+        <div class="sidebar-content">
+            {@render updates()}
         </div>
-        <!-- sections -->
-        <div class="flex flex-col justify-end gap-y-8">
-            {#if page.data.layoutData?.news.length }
-            <figure class="sidebar-section">
-                <header class="sidebar-header flex justify-between">
-                    {@render updatesNav()}
-                    <h3>updates</h3>
-                </header>
-                <div class="sidebar-content">
-                    {@render updates()}
-                </div>
-            </figure>
-            {/if}
-            {#if visibleResidents.length}
-            <figure class="sidebar-section">
-                {@render residents()}
-            </figure>
-            {/if}
-            <figure class="sidebar-section">
-                <header class="sidebar-header justify-end">
-                    <h3>subscribe</h3>
-                </header>
-                <div class="sidebar-content">
-                    <input type="email" placeholder="Enter your e-mail" class="border-b py-2 border-dotted opacity-50 w-full focus:outline-0 "/>
-                </div>
-            </figure>
-        </div>
-    </div>
-</aside>
-<style>
-    @reference "#lib/styles/app.css";
-    .sidebar-section{
-        @apply border-t-3 grid grid-cols-1 grid-rows-[auto_auto] gap-y-2;
-    }
-    .sidebar-header{
-        @apply flex items-center h-fit leading-tight;
-    }
-    .sidebar-header > h3{
-        @apply font-bold;
-    }
-    .sidebar-content{
-        @apply text-sm font-tz;
-    }
-    aside::after{
-        content: '';
-        --tw-duration: 1s;
-        @apply bg-gradient fixed w-(--sidebar-w) right-0 top-0 bottom-0 z-[-1];
-    }
-
-    aside,
-    aside::after {
-        transition: opacity 0.5s ease-out;
-    }
-    aside.hide,
-    aside.hide::after {
-        opacity: 0;
-    }
-</style>
+    </figure>
+    {/if}
+    {#if visibleResidents.length}
+    <figure class="sidebar-section">
+        {@render residents()}
+    </figure>
+    {/if}
+    <figure class="sidebar-section">
+        <header class="sidebar-header justify-end">
+            <h3>newsletter</h3>
+        </header>
+        <Subscribe />
+    </figure>
+</div>

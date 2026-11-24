@@ -2,10 +2,10 @@
   import { onMount } from 'svelte';
 
   let {
-    color = '#000',
-    hideSidebar = false,
-    range = [0.4, .8]
-  }: { color?: string; range?: [number, number], hideSidebar?: boolean } = $props();
+    color = 'white',
+    slideOoo = false,
+    range = [0.5, 0.7]
+  }: { color?: string; range?: [number, number], slideOoo?: boolean } = $props();
 
   // Base sizes in vmin units, plus how each shape reacts to the cursor.
   //  invW / invH: reverse the direction for counter-motion
@@ -92,7 +92,7 @@
 <!-- pointermove covers mouse, pen and touch -->
 <svelte:window onpointermove={onPointerMove} onresize={wake} />
 
-<div class="resonance" class:ready class:hideSidebar aria-hidden="true" style:--color={color}>
+<div class="resonance" class:ready class:slideOoo aria-hidden="true" style:--color={color}>
   {#each sizes as s, i (i)}
     <div
       class="shape"
@@ -106,12 +106,13 @@
 <style>
     @reference "#lib/styles/app.css";
     .resonance {
-        @apply left-main z-300 fixed flex justify-end gap-[1.6vmin] items-end right-(--sidebar-w) pr-main bottom-main pointer-events-none opacity-80;
+        @apply blur-xs left-main z-300 fixed flex justify-end gap-[1.6vmin] items-end right-(--sidebar-w) pr-main bottom-main pointer-events-none opacity-80;
+        mix-blend-mode: multiply, luminosity;
         transition: opacity 0.4s, right 0.4s;
     }
 
-    .resonance.hideSidebar{
-        @apply right-main;
+    .resonance.slideOoo{
+        @apply right-0;
     }
     .resonance.ready {
     opacity: 80%;

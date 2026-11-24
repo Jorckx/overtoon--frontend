@@ -1,0 +1,46 @@
+.cookieConsentWrapper {
+	--txt: var(--color-gray-200);
+	@apply fixed bottom-0 left-0 z-3000 w-full bg-black/90 p-sm;
+}
+.cookieConsent {
+	@apply flex flex-wrap justify-between gap-[calc(var(--spacing-main)*3)];
+}
+.cookieConsentWrapper * {
+	@apply text-sm text-(--txt);
+}
+.cookieConsentWrapper *:is(a, button) {
+	@apply cursor-pointer border-b border-current font-bold no-underline;
+}
+.cookieConsent__Right {
+	@apply flex gap-sm;
+}
+
+/* popup settings */
+.cookieConsentOperations {
+	--txt: var(--color-stone-900);
+	@apply fixed inset-0 z-3001 m-auto flex max-h-fit max-w-[600px] items-center gap-main
+		bg-white p-main shadow-[0_0_10px_rgba(0,0,0,0.5)];
+}
+.cookieConsentOperations * {
+	@apply text-(--txt);
+}
+.cookieConsentOperations input[type='checkbox'] {
+	@apply size-[0.7em] cursor-pointer appearance-none border-[0.15em] border-current bg-white text-current;
+}
+.cookieConsentOperations input[type='checkbox']:checked {
+	@apply bg-stone-900;
+}
+.cookieConsentOperations input[type='checkbox']:disabled:checked {
+	@apply bg-stone-500;
+}
+.cookieConsentOperations button[type='submit'] {
+	@apply mt-4 mr-0 ml-auto block cursor-pointer border border-stone-900 px-[0.5em] py-[0.15em];
+}
+.cookieConsentOperations label {
+	@apply text-base font-bold;
+}
+
+/* cookie toggle button */
+.cookietoggle {
+	@apply cursor-pointer text-sm;
+}
