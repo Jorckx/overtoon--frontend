@@ -66,20 +66,16 @@
    	@reference '#lib/styles/app.css';
 
     .subscribe {
-        @apply  mr-auto relative text-black w-full font-tz;
-	}
-	.subscribe-title {
-	    @apply text-base leading-none text-left font-normal;
-
+        @apply  mr-auto mt-main relative text-black w-full font-tz;
 	}
 	.subscribe-message {
-	    @apply mt-1 text-xs text-black/60;
+	    @apply mt-1 text-sm text-black/60;
 	}
 	.subscribe-form {
 	    @apply grid grid-cols-[1fr_auto] gap-x-main items-end;
 	}
 	input[type='email'] {
-	    @apply leading-loose border-b border-dotted border-b-black/30 text-black/60 text-base ;
+	    @apply leading-loose border-b border-dotted border-b-black/30 text-black/60 text-sm ;
 	}
 	input[type='email']:active,
 	input[type='email']:target,
@@ -87,6 +83,6 @@
 	    @apply outline-none text-black border-black/50 bg-transparent ;
 	}
 	.subscribe-button {
-	    @apply text-base cursor-pointer ;
+	    @apply text-sm cursor-pointer ;
 	}
 </style>

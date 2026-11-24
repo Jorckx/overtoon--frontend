@@ -27,7 +27,7 @@ export const defaultParams: SwiperOptions = {
 // cards
 export const cardParams: SwiperOptions = {
 		slidesPerView: 'auto',
-		spaceBetween: 20,
+		spaceBetween: 3,
 		loop: true,
 		centeredSlides: true,
 		freeMode: {
@@ -35,7 +35,7 @@ export const cardParams: SwiperOptions = {
       momentum: false, // no easing after drag/wheel
 			sticky: false,
 		},
-		grabCursor: true,
+		grabCursor: false,
 		speed: 8000,
     autoplay: {
       delay: 0,

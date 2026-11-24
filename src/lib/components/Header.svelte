@@ -22,13 +22,13 @@ let toggleMenu = $state(false)
     <button
         onclick={() => toggleMenu = !toggleMenu}
         in:fade|global={{ duration: 500, delay: 250 }}
-        class="fixed right-main top-main font-tz text-md">
+        class="block lg:hidden fixed bottom-0 p-main w-full font-tz text-lg">
             menu
     </button>
 {/snippet}
 {#snippet menu()}
     <div class="menu-wrapper pb-0 h-full p-main">
-        <div class="menu  h-full transition-border duration-100 border-b-3">
+        <div class="menu h-full transition-border duration-100 border-b-3">
             <div class="menu-inner h-fit flex gap-x-4 w-full justify-between">
 
                 <!-- language switch -->
@@ -69,19 +69,17 @@ let toggleMenu = $state(false)
 <!-- MARKUP -->
 <div class="header-wrapper grid lg:grid-cols-(--interface-cols) grid-rows-1 duration-200 transition-all" class:scrolled={y > 50}>
     <!-- Logo -->
-    <div class="logo">
+    <div class="logo bg-white lg:bg-transparent">
         <O active={y > 50} />
         <Logo duration={3000} interval={10000} hide={y > 50} />
     </div>
 
     <!-- menu -->
     <div>
-        <!-- {#if y > 50}
-            {@render btn()}
-        {/if} -->
         <div class="hidden lg:block h-full">
             {@render menu()}
         </div>
+        {@render btn()}
     </div>
 </div>
 

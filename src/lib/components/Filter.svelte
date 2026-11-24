@@ -1,6 +1,6 @@
 <script lang="ts" module>
   const buttonClass =
-    ' leading-normal cursor-pointer lowercase focus-visible:outline-2 focus-visible:outline-offset-2 aria-pressed:font-black';
+    ' leading-normal cursor-pointer lowercase focus-visible:outline-2 focus-visible:outline-offset-2 font-bold aria-pressed:font-normal';
 </script>
 
 <script lang="ts">
@@ -28,9 +28,9 @@
 </script>
 
 {#if options.length > 1}
-  <fieldset class="m-0 border-0 p-0 ">
+  <fieldset class="m-0 p-0 ">
     <legend class="sr-only">{label}</legend>
-    <ul class="fw-full p-main flex justify-center flex-wrap gap-main border-b">
+    <ul class="fw-full p-main flex justify-center flex-wrap gap-main ">
       <li>
         <button type="button" class={buttonClass} aria-pressed={selected.length === 0} onclick={handleReset}>
           {allLabel}

@@ -11,7 +11,10 @@
 
 <!-- SNIPPETS -->
 {#snippet activities()}
-    <div class="sidebar-content border-t">
+    <header class="sidebar-header justify-end">
+        <h3>projects</h3>
+    </header>
+    <div class="sidebar-content">
         <ul>
             {#each page.data.pageData.activities as activity (activity.id)}
                 <li class="not-last:border-b border-black/10 flex gap-4 justify-between py-0.5">
@@ -19,12 +22,8 @@
                         {activity.title}
                     </a>
                     <span class="opacity-35 font-tz-mono">
-                        {#if activity.start}
-                            {formatDate(activity.start, DATE_FORMATS.compact)}
-                        {/if}
-                        {#if activity.end}
-                             – {formatDate(activity.end, DATE_FORMATS.compact)}
-                        {/if}
+                        {#if activity.start}{formatDate(activity.start, DATE_FORMATS.compact)}{/if}
+                        {#if activity.end} – {formatDate(activity.end, DATE_FORMATS.compact)}{/if}
                     </span>
                 </li>
             {/each}
@@ -35,35 +34,27 @@
     <!-- prim tab -->
     <button type="button" role="tab"
         aria-selected={activeTab === 'text'}
-        class="cursor-pointer font-bold {activeTab === 'text' ? '' : 'opacity-35'}"
+        class="cursor-pointer text-base font-bold {activeTab === 'text' ? '' : 'opacity-35'}"
         onclick={() => (activeTab = 'text')}
     >
         info
     </button>
     <!-- sec tab -->
-    <div class="flex gap-x-main">
-        {#if page.data.pageData?.activities.length}
-        <button type="button" role="tab"
-            aria-selected={activeTab === 'activities'}
-            class="cursor-pointer font-bold {activeTab === 'activities' ? '' : 'opacity-35'}"
-            onclick={() => (activeTab = 'activities')}
-        >
-            activities
-        </button>
-        {/if}
-        {#if page.data.pageData?.links.length}
-        <button type="button" role="tab"
-            aria-selected={activeTab === 'links'}
-            class="cursor-pointer font-bold {activeTab === 'links' ? '' : 'opacity-35'}"
-            onclick={() => (activeTab = 'links')}
-        >
-            links
-        </button>
-        {/if}
-    </div>
+    {#if page.data.pageData?.activities.length}
+    <button type="button" role="tab"
+        aria-selected={activeTab === 'activities'}
+        class="cursor-pointer text-base font-bold {activeTab === 'activities' ? '' : 'opacity-35'}"
+        onclick={() => (activeTab = 'activities')}
+    >
+       projects / links
+    </button>
+    {/if}
 {/snippet}
 {#snippet links()}
-    <div class="sidebar-content border-t">
+    <header class="sidebar-header justify-end">
+        <h3>links</h3>
+    </header>
+    <div class="sidebar-content">
         <ul>
             {#each page.data.pageData.links as link (link.id)}
                 <li class="not-last:border-b border-black/10 flex gap-4 justify-between py-0.5">
@@ -76,11 +67,14 @@
     </div>
 {/snippet}
 {#snippet periods()}
-    <div class="sidebar-content border-none mb-0">
+    <header class="sidebar-header justify-end">
+        <h3>residency</h3>
+    </header>
+    <div class="sidebar-content mb-0">
         <ul>
             {#each page.data.pageData.periods as period, i (i)}
-                <li class="border-t border-black/10 flex gap-4 justify-between py-0.5">
-                    {period.start}
+                <li class="not-last:border-b border-black/10 flex gap-4 justify-between py-0.5">
+                    {#if period.start}{formatDate(period.start, DATE_FORMATS.compact)}{/if}{#if period.end} – {formatDate(period.end, DATE_FORMATS.compact)}{:else} –...{/if}
                 </li>
             {/each}
         </ul>
@@ -95,25 +89,32 @@
     </header>
 
     <!-- views -->
-    <div class="flex flex-col justify-start gap-y-main">
+    <div class="flex flex-col justify-start">
         <!-- info -->
         {#if activeTab === 'text'}
-            {@render periods()}
-            <div class="desc relative text-sm h-full overflow-y-scroll">{@html page.data.pageData?.text}</div>
+        <div class="desc relative text-sm h-full overflow-y-scroll">{@html page.data.pageData?.text}</div>
         <!-- activities -->
         {:else if activeTab === 'activities'}
-            <div class="mb-lg flex flex-col gap-y-main">
-                {#if page.data.pageData?.activities.length}
-                <figure>
-                    {@render activities()}
-                </figure>
-                {/if}
-                {#if page.data.pageData?.links.length}
-                <figure>
-                    {@render links()}
-                </figure>
-                {/if}
-            </div>
+        <div class="my-main flex flex-col gap-y-main h-full overflow-y-scroll">
+            <figure>
+                {@render periods()}
+            </figure>
+            {#if page.data.pageData?.activities.length}
+            <figure>
+                {@render activities()}
+            </figure>
+            {/if}
+            {#if page.data.pageData?.links.length}
+            <figure>
+                {@render links()}
+            </figure>
+            {/if}
+            {#if page.data.pageData?.presentations?.length}
+            <figure>
+                {@render links()}
+            </figure>
+            {/if}
+        </div>
         {/if}
     </div>
 

@@ -6,7 +6,7 @@
 
 
 <!-- MARKUP -->
-<aside class="fixed pt-(--hh) w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0" style:--thm={theme}>
+<aside class="lg:fixed pt-(--hh) lg:w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0" style:--thm={theme}>
     <!-- inner -->
     <div use:reveal={{delay: 300, duration: '100ms', opacityDuration: '300ms'}} class="js:reveal p-main w-full h-full flex flex-col justify-between">
         {@render content()}
@@ -18,10 +18,10 @@
 <style>
     @reference "#lib/styles/app.css";
     aside :global(.sidebar-section){
-        @apply border-t-3 grid grid-cols-1 grid-rows-[auto_auto] gap-y-sm;
+        @apply grid grid-cols-1 grid-rows-[auto_auto] gap-y-0.5;
     }
     aside :global(.sidebar-header){
-        @apply flex items-center h-fit leading-tight;
+        @apply border-b flex items-center h-fit leading-tight lowercase;
     }
     aside :global(.sidebar-header > h3){
         @apply font-bold;
@@ -32,7 +32,7 @@
     aside::after{
         content: '';
         --tw-duration: 1s;
-        @apply fixed w-(--sidebar-w) right-0 top-0 bottom-0 z-[-1];
+        @apply hidden lg:block fixed  w-(--sidebar-w) right-0 top-0 bottom-0 z-[-1];
         @apply bg-linear-to-b from-(--thm) to-white;
     }
 

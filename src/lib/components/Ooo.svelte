@@ -106,7 +106,7 @@
 <style>
     @reference "#lib/styles/app.css";
     .resonance {
-        @apply blur-xs left-main z-300 fixed flex justify-end gap-[1.6vmin] items-end right-(--sidebar-w) pr-main bottom-main pointer-events-none opacity-80;
+        @apply hidden blur-xs left-main z-300 fixed lg:flex justify-end gap-[1.6vmin] items-end lg:right-(--sidebar-w) right-0 pr-main bottom-main pointer-events-none opacity-80;
         mix-blend-mode: multiply, luminosity;
         transition: opacity 0.4s, right 0.4s;
     }
