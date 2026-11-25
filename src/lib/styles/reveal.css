@@ -6,6 +6,7 @@
 @utility reveal-zoom  { --reveal-from: scale(0.92); }
 @utility reveal-flip  { --reveal-from: translateY(-5rem) rotate(-5deg); }
 @utility reveal-top  { --reveal-from: translateY(-20rem); }
+@utility reveal-bottom  { --reveal-from: translateY(20rem); }
 
 @utility reveal {
 	opacity: 0;

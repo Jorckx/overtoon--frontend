@@ -1,4 +1,4 @@
-import { globalSeoQuery, type seoQueryType  } from '#lib/queries/index.js';
+import { getImages, globalSeoQuery, type seoQueryType, type imageType   } from '#lib/queries/index.js';
 
 export type layoutQueryType = {
   isErrorPage: true;
@@ -83,6 +83,7 @@ export const layoutQuery = {
       select: {
         id: true,
         title: true,
+        cover: getImages('page.cover.toFile'),
         periods: {
           query: 'page.periods.toStructure',
           select: {

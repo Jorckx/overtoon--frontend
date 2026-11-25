@@ -2,10 +2,11 @@
   import { onMount } from 'svelte';
 
   let {
-    color = 'white',
+    color = 'black',
     slideOoo = false,
+    pushOoo = false,
     range = [0.5, 0.7]
-  }: { color?: string; range?: [number, number], slideOoo?: boolean } = $props();
+  }: { color?: string; range?: [number, number], slideOoo?: boolean, pushOoo?: boolean } = $props();
 
   // Base sizes in vmin units, plus how each shape reacts to the cursor.
   //  invW / invH: reverse the direction for counter-motion
@@ -92,7 +93,7 @@
 <!-- pointermove covers mouse, pen and touch -->
 <svelte:window onpointermove={onPointerMove} onresize={wake} />
 
-<div class="resonance" class:ready class:slideOoo aria-hidden="true" style:--color={color}>
+<div class="resonance" class:ready class:slideOoo class:pushOoo aria-hidden="true" style:--color={color}>
   {#each sizes as s, i (i)}
     <div
       class="shape"
@@ -106,22 +107,25 @@
 <style>
     @reference "#lib/styles/app.css";
     .resonance {
-        @apply hidden blur-xs left-main z-300 fixed lg:flex justify-end gap-[1.6vmin] items-end lg:right-(--sidebar-w) right-0 pr-main bottom-main pointer-events-none opacity-80;
+        @apply hidden blur-none left-main z-300 fixed lg:flex justify-end gap-[1.6vmin] items-end lg:right-(--sidebar-w) right-0 pr-main bottom-main pointer-events-none;
         mix-blend-mode: multiply, luminosity;
-        transition: opacity 0.4s, right 0.4s;
+        transition: all 0.4s;
     }
 
     .resonance.slideOoo{
         @apply right-0;
     }
+    .resonance.pushOoo{
+        @apply bottom-lg;
+    }
     .resonance.ready {
-    opacity: 80%;
+        opacity: 80%;
     }
 
     .shape {
-    flex: none;
-    background: var(--color);
-    border-radius: 50%;
+        flex: none;
+        background: var(--color);
+        border-radius: 50%;
     }
 
     /* ring: ellipse with a transparent elliptical hole, so the wall thickness

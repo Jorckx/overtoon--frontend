@@ -4,7 +4,8 @@
     import { page } from '$app/state';
     import { resolve } from '$app/paths';
     import { fade } from 'svelte/transition';
-   	import { formatDate, DATE_FORMATS } from '#lib/utils/date.js';
+   	import { formatDate, DATE_FORMATS } from '#lib/utils/formatDate.js';
+   	import { formatPeriod } from '#lib/utils/formatPeriod.js';
 
     // 3. components
 	import Subscribe from '#lib/components/Subscribe.svelte';
@@ -35,11 +36,11 @@
         <ul>
             {#each visibleResidents as resident (resident.id)}
                 <li class="not-last:border-b border-black/10 flex gap-4 justify-between py-0.5">
-                    <a href={resolve(resident.id)}>
+                    <a href={resolve(resident.id)} class="font-tz">
                         {resident.title}
                     </a>
-                    <span class="opacity-35 font-tz-mono">
-                        {#if resident.period.start}{formatDate(resident.period.start, DATE_FORMATS.compact)}{/if}{#if resident.period.end} – {formatDate(resident.period.end, DATE_FORMATS.compact)}{/if}
+                    <span class="opacity-35 font-marfa font-bold">
+                        {formatPeriod(resident.period)}
                     </span>
                 </li>
             {/each}
@@ -56,7 +57,7 @@
                 in:fade={{ duration: 100, delay: 100 }}
                 out:fade={{ duration: 100 }}
             >
-                <li class="text-tz text-purple-500">{newsitems[nth].category}</li>
+                <li class="font-marfa font-bold text-purple-500">{newsitems[nth].category}</li>
                 {#if newsitems[nth].highlightSum}
                     <li>{newsitems[nth]?.highlightSum}</li>
                 {/if}

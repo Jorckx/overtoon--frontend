@@ -4,7 +4,9 @@
 	import Image from '#lib/components/Image.svelte';
 	import Sidebar from '#lib/components/Sidebar/index.svelte';
 	import ArtistTab from '#lib/components/Sidebar/ArtistTab.svelte';
-	// import { localizeHref } from '#lib/paraglide/runtime.js';
+	import { localizeHref } from '#lib/paraglide/runtime.js';
+	import Arrow from '#lib/components/icon/Arrow.svelte';
+	import { resolve } from '$app/paths';
 
 </script>
 <!-- SNIPPETS -->
@@ -12,13 +14,10 @@
     <ArtistTab/>
 {/snippet}
 {#if page.data.pageData}
-    <div class="grid ">
-        <figure class="col-span-2 h-[calc(100dvh-var(--hh))]">
-            <Image image={page.data.pageData?.cover}/>
-        </figure>
-        <Blocks />
-    </div>
-    <Sidebar content={sidebarContent} theme='var(--color-pink-300)' />
+    <figure class="col-span-2 h-[calc(100dvh-var(--hh))] relative">
+        <Image image={page.data.pageData?.cover}/>
+    </figure>
+    <Sidebar content={sidebarContent} />
 {:else}
     page not found…
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts" module>
   const buttonClass =
-    ' leading-normal cursor-pointer lowercase focus-visible:outline-2 focus-visible:outline-offset-2 font-bold aria-pressed:font-normal';
+    ' leading-normal cursor-pointer lowercase focus-visible:outline-2 focus-visible:outline-offset-2 font-bold aria-pressed:text-black/35';
 </script>
 
 <script lang="ts">
@@ -9,10 +9,11 @@
     selected?: string[];
     label: string;
     allLabel: string;
+    hideAll?: boolean,
     single?: boolean;
   };
 
-  let { options, selected = $bindable([]), label, allLabel, single = false }: Props = $props();
+  let { options, selected = $bindable([]), label, allLabel, hideAll, single = false }: Props = $props();
 
   const handleToggle = (option: string) => {
     if (selected.includes(option)) {
@@ -28,26 +29,26 @@
 </script>
 
 {#if options.length > 1}
-  <fieldset class="m-0 p-0 ">
-    <legend class="sr-only">{label}</legend>
-    <ul class="fw-full p-main flex justify-center flex-wrap gap-main ">
-      <li>
-        <button type="button" class={buttonClass} aria-pressed={selected.length === 0} onclick={handleReset}>
-          {allLabel}
+<legend class="sr-only">{label}</legend>
+<ul class="flex justify-center flex-wrap gap-main ">
+    {#if !hideAll}
+    <li>
+    <button type="button" class={buttonClass} aria-pressed={selected.length === 0} onclick={handleReset}>
+        {allLabel}
+    </button>
+    </li>
+    {/if}
+    {#each options as option (option)}
+    <li>
+        <button
+        type="button"
+        class={buttonClass}
+        aria-pressed={selected.includes(option)}
+        onclick={() => handleToggle(option)}
+        >
+        {option}
         </button>
-      </li>
-      {#each options as option (option)}
-        <li>
-          <button
-            type="button"
-            class={buttonClass}
-            aria-pressed={selected.includes(option)}
-            onclick={() => handleToggle(option)}
-          >
-            {option}
-          </button>
-        </li>
-      {/each}
-    </ul>
-  </fieldset>
+    </li>
+    {/each}
+</ul>
 {/if}

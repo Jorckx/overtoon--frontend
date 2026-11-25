@@ -1,12 +1,12 @@
 <script lang="ts">
     // 1. internal
-    let { content, theme = 'var(--color-cyan-400)' } = $props();
+    let { content } = $props();
     import reveal from '#lib/utils/reveal.js';
 </script>
 
 
 <!-- MARKUP -->
-<aside class="lg:fixed pt-(--hh) lg:w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0" style:--thm={theme}>
+<aside class="lg:fixed pt-(--hh) lg:w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0">
     <!-- inner -->
     <div use:reveal={{delay: 300, duration: '100ms', opacityDuration: '300ms'}} class="js:reveal p-main w-full h-full flex flex-col justify-between">
         {@render content()}
@@ -21,7 +21,7 @@
         @apply grid grid-cols-1 grid-rows-[auto_auto] gap-y-0.5;
     }
     aside :global(.sidebar-header){
-        @apply border-b flex items-center h-fit leading-tight lowercase;
+        @apply border-b flex items-center h-fit leading-tight lowercase mb-0.75;
     }
     aside :global(.sidebar-header > h3){
         @apply font-bold;

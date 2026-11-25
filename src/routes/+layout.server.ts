@@ -28,8 +28,9 @@ export async function load({ url, locals }) {
   const page = layoutData?.result ?? layoutData;
   if (!page) throw error(404, 'Page not found…');
 
-  const activitiesByArtist = new Map<string, { id: string; title: string }[]>();
 
+  // residents + residentmode
+  const activitiesByArtist = new Map<string, { id: string; title: string }[]>();
   for (const activity of page.activities) {
     for (const artist of activity.artists ?? []) {
       const list = activitiesByArtist.get(artist.id) ?? [];

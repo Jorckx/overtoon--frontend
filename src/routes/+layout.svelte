@@ -18,9 +18,11 @@
 
 	// 3. STATE
 	const path = $derived(deLocalizeHref(page.url.pathname));
-	const OooToRight = ['/artists'];
+	const OooRight = ['/artists', '/residencies', '/activities', '/about', '/updates'];
+	const OooUp = ['/artists', '/activities'];
 	const hasFooter = ['/about'];
-    const slideOoo = $derived(OooToRight.includes(path))
+    const slideOoo = $derived(OooRight.includes(path))
+    const pushOoo = $derived(OooUp.includes(path))
 	let hh = $state(0);
 
 	// 3. ON NAVIGATE
@@ -43,9 +45,9 @@
 		}, 300);
 	});
 
-	// 3. DATA DEBUG
-	import Datarow from '#lib/components/data/row.svelte'
-	import Datawrapper from '#lib/components/data/wrapper.svelte'
+	// // 3. DATA DEBUG
+	// import Datarow from '#lib/components/data/row.svelte'
+	// import Datawrapper from '#lib/components/data/wrapper.svelte'
 </script>
 
 <!-- SEO / GDPR -->
@@ -58,13 +60,13 @@
 </header>
 
 {#if hh}
-<main style:--hh="{hh}px" class="h-[calc(100dvh-var(--hh))]">
+<main style:--hh="{hh}px" style:--thm={page.data.theme || 'var(--color-cyan-400)'} class="h-[calc(100dvh-var(--hh))]">
 	{@render children()}
 </main >
 {/if}
 
 <!-- Ooo -->
-<Ooo {slideOoo} />
+<Ooo {slideOoo} {pushOoo} />
 
 {#if hasFooter.includes(path)}
 	<Footer />

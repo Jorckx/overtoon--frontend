@@ -86,9 +86,7 @@ let toggleMenu = $state(false)
 <style>
     @reference "#lib/styles/app.css";
     .logo{
-        @apply z-100 h-full flex items-center p-main duration-300;
-    }
-    .logo{
+        @apply z-100 h-full flex items-center p-main pl-0 ml-main duration-300;
         @apply border-b-3 border-black;
     }
     .menu > *{

@@ -22,15 +22,30 @@ export async function load({ url, locals }) {
     ...artist,
     years: [...new Set((artist.periods ?? []).map((p) => p.year))]
   }));
-
   if (!artists) throw error(404, 'artists not found');
+
+  // current artists
+  // const current = (artists ?? []).filter((artist) => artist.current === 'true');
+  function pickRandom(items, limit = 10) {
+    const copy = [...items];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, limit);
+  }
+
+  const randomArtists = pickRandom(artists ?? [], 10);
+
 
   // Cache-Tag for this page. The hook sends it with the response (hooks.server.ts && app.d.ts).
   locals.cacheTags.add(`page:${pageId}`);
   console.log(locals.cacheTags)
 
   return {
+    theme: 'var(--color-pink-300)',
     artists,
+    randomArtists,
     pageData,
     isPreview: !!preview,
     metamessage: url.pathname.slice(1)
