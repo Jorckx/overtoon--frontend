@@ -79,14 +79,14 @@ let toggleMenu = $state(false)
 <div class="header-wrapper grid lg:grid-cols-(--interface-cols) grid-rows-1 duration-200 transition-all" class:scrolled={y > 50}>
     <!-- LOGO -->
     <div class="header-main flex w-full flex-row justify-between z-400 bg-white/80 backdrop-blur-sm lg:backdrop-blur-none lg:bg-transparent">
-        <div class="logo w-full grow">
+        <div class="logo w-auto grow">
             <LogoO active={y > 50} />
             <Logo duration={3000} interval={10000} hide={y > 50} />
         </div>
         {#if w < 976}
-        <div class="border-b-6 h-auto w-auto lg:hidden">
-            {@render mobileToggle()}
-        </div>
+            <div class="border-b-6 h-auto w-auto lg:hidden">
+                {@render mobileToggle()}
+            </div>
         {/if}
     </div>
 
