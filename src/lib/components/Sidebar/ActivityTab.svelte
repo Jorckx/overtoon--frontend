@@ -68,7 +68,7 @@
 <div class="grid grid-rows-[auto_minmax(0,1fr)_auto] flex-col h-full gap-y-main">
     <!-- headline -->
     <header>
-        <a href={resolve(localizeHref('/activities'))} class="flex items-center font-bold text-base gap-x-sm mb-sm leading-tight">
+        <a href={resolve(localizeHref('/activities'))} class="flex justify-end text-base font-bold items-center gap-x-sm leading-tight mb-sm">
             ← activities
         </a>
         <h1 class="font-tz text-md leading-tight">{page.data.pageData?.title}</h1>

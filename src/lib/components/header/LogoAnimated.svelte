@@ -121,7 +121,7 @@
   <g fill="currentColor">
     <!-- o (first letter) -->
     <path
-        class="first-o hidden"
+        class="first-o lg:hidden"
         bind:this={o1}
         d="M33.62,36.33c-12.14,0-18.78-4.55-18.78-10.54s7.51-8.61,16.77-8.61c12.02,0,18.65,4.55,18.65,10.54s-7.39,8.61-16.65,8.61M65.12,26.55c0-8.6-12.23-15.78-31.97-15.78S0,18.01,0,26.98C0,35.57,12.37,42.7,31.83,42.7s33.28-7.18,33.28-16.15"
     />
@@ -163,11 +163,12 @@
 </a>
 
 <style>
+@reference "#lib/styles/app.css";
   svg {
+    /*@apply h-xl;*/
     display: block;
     /*width: 100%;*/
-    /*height: 6.73rem;*/
-    height: 100%;
+    /*height: 100%;*/
     overflow: visible;
     transform-origin: top left;
     transition: transform 200ms;
@@ -182,7 +183,6 @@
       /*transform: scale(0.8);*/
   }
   svg.hide > g > path {
-      opacity: 0;
-      transform: translateY(-0.3rem);
+      @apply lg:transform-[translateY(-0.3rem)] lg:opacity-0;
   }
 </style>

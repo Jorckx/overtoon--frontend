@@ -17,12 +17,21 @@ export async function load({ url, locals }) {
   const page = pageData?.result ?? pageData;
   if (!page) throw error(404, 'Page not found');
 
+  // flatten activities with eventtype
+  const activities = (page.activities ?? []).map((activity) => ({
+    ...activity,
+    // year: activity.year ? [activity.year] : [],
+    eventtype: activity.eventtype ? [activity.eventtype] : [],
+  }));
+  if (!activities) throw error(404, 'artists not found');
+
   // Cache-Tag for this page. The hook sends it with the response (hooks.server.ts && app.d.ts).
   locals.cacheTags.add(`page:${pageId}`);
   console.log(locals.cacheTags)
 
   return {
     theme: "var(--color-green-500)",
+    activities,
     pageData,
     isPreview: !!preview,
     metamessage: url.pathname.slice(1)

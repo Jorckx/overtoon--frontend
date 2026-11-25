@@ -9,7 +9,7 @@
 
 	import Ooo from '#lib/components/Ooo.svelte';
 	import Seo from '#lib/components/Seo.svelte';
-	import Header from '#lib/components/Header.svelte';
+	import Header from '#lib/components/header/Header.svelte';
 	import Footer from '#lib/components/Footer.svelte';
 	import Consent from '#lib/components/Consent.svelte';
 
@@ -55,12 +55,12 @@
 <Consent production={!data.devmode} />
 
 <!-- MARKUP -->
-<header bind:clientHeight={hh} class="sticky top-0 z-900 h-fit">
+<header bind:clientHeight={hh} class="fixed w-full top-0 z-900 h-fit" style:--thm={page.data.theme || 'var(--color-cyan-400)'}>
 	<Header />
 </header>
 
 {#if hh}
-<main style:--hh="{hh}px" style:--thm={page.data.theme || 'var(--color-cyan-400)'} class="h-[calc(100dvh-var(--hh))]">
+<main style:--hh="{hh}px" style:--thm={page.data.theme || 'var(--color-cyan-400)'} class="min-h-[calc(100vh-var(--hh))] pt-[calc(var(--hh)-1px)]">
 	{@render children()}
 </main >
 {/if}

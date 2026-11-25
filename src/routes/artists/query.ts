@@ -28,7 +28,6 @@ const artistQuery = {
 			modified: "page.modified('c', 'date')",
       cover: getImages('page.cover.toFile'),
       links: linksQuery,
-      current: true,
       periods: {
         query: 'page.periods.toStructure',
         select: {

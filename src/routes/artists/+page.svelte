@@ -35,14 +35,12 @@
 
 <!-- MARKUP -->
 <!-- <div class="grid grid-rows-1 h-fit lg:grid-cols-(--interface-cols)"> -->
-<article class="w-full min-w-0 grid grid-rows-[auto_minmax(0,1fr)] grid-cols-1 h-full" >
+<article class="w-full min-w-0 grid grid-rows-[auto_minmax(0,1fr)] grid-cols-1 h-full p-main lg:p-0" >
     <!-- filter -->
-    <fieldset class="m-0 flex justify-between mx-main p-sm gap-x-lg fixed border-t-3 bottom-0 left-0 right-0 z-200">
-        <span class="font-marfa text-base font-bold">Residents by year</span>
+    <fieldset class="m-0 flex justify-center mx-main p-sm gap-x-lg fixed border-t-6 bg-linear-to-r from-transparent via-white to-transparent bottom-0 left-0 right-0 z-200">
         <FilterButtons
             label="Filter by residency year"
-            allLabel={showingPast ? 'latest' : 'current'}
-            hideAll
+            allLabel="random"
             options={years}
             single
             bind:selected={selections.years}

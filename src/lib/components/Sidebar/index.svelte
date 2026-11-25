@@ -21,7 +21,7 @@
         @apply grid grid-cols-1 grid-rows-[auto_auto] gap-y-0.5;
     }
     aside :global(.sidebar-header){
-        @apply border-b flex items-center h-fit leading-tight lowercase mb-0.75;
+        @apply border-b-2 flex items-center h-fit leading-tight lowercase mb-0.75;
     }
     aside :global(.sidebar-header > h3){
         @apply font-bold;

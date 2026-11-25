@@ -21,4 +21,4 @@ export const createFilterContext = <K extends string>(name: string, fields: read
 
 // one definition per filter set
 export const artistFilter = createFilterContext('artists', ['years']);
-export const projectFilter = createFilterContext('projects', ['category', 'sector']);
+export const activityFilter = createFilterContext('projects', ['year', 'eventtype']);

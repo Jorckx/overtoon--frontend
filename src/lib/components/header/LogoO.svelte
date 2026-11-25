@@ -31,18 +31,17 @@ let { active = false, scale = 1.3 }: Props = $props();
 </a>
 
 <style>
+@reference "#lib/styles/app.css";
   .o {
+    @apply hidden lg:block h-full transition-transform duration-300 origin-top-left pointer-events-none;
     /* same width the o had as part of the full-width logo svg (65.12 / 762.8) */
     width: calc(
-      (100vw - var(--sidebar-w) - var(--spacing-main) * 3) * 0.08537
+      (calc(100vw - var(--sidebar-w) - var(--spacing-main) * 3)) * 0.08537
     );
-    display: block;
-    pointer-events: none; /* full wordmark link handles clicks until scrolled */
-    transform-origin: left top;
-    transition: transform 300ms;
+
   }
   .o.active {
-    pointer-events: auto;
+    @apply pointer-events-auto;
     transform: scale(var(--o-scale)) translateY(-0.8rem);
   }
   svg {

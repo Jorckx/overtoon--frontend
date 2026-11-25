@@ -131,8 +131,8 @@
     /* ring: ellipse with a transparent elliptical hole, so the wall thickness
         changes naturally with the proportions */
     .ring {
-    --mask: radial-gradient(ellipse 27.5% 30.5% at 50% 50%, transparent 98%, #000 100%);
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
+        --mask: radial-gradient(ellipse 27.5% 30.5% at 50% 50%, transparent 98%, #000 100%);
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
     }
 </style>

@@ -102,7 +102,7 @@
 <div class="grid grid-rows-[auto_minmax(0,1fr)_auto] flex-col h-full gap-y-main">
     <!-- headline -->
     <header>
-        <a href={resolve(localizeHref('/artists'))} class="flex text-base font-bold items-center gap-x-sm mb-sm leading-tight">
+        <a href={resolve(localizeHref('/artists'))} class="flex justify-end text-base font-bold items-center gap-x-sm leading-tight mb-sm">
             ← artists
         </a>
         <h1 class="font-tz text-md leading-tight sticky top-0">{page.data.pageData?.title}</h1>
