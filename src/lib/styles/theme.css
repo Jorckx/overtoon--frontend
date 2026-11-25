@@ -39,6 +39,7 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
     --text-lg: clamp(1rem, 20vw, 8rem);
 
     /* spacing */
+    --spacing-xl: 8rem;
     --spacing-lg: 4rem;
     --spacing-main: 1rem;
     --spacing-sm: 0.5rem;

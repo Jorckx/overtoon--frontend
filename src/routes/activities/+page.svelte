@@ -24,9 +24,9 @@
 {/snippet}
 
 <!-- MARKUP -->
-<article class="w-full min-w-0 grid grid-rows-[auto_minmax(0,1fr)] grid-cols-1 h-full" >
+<article class="w-full min-w-0 grid grid-rows-[auto_minmax(0,1fr)] grid-cols-1 h-full mb-xl" >
     <!-- FILTER -->
-    <fieldset class="m-0 flex justify-center mx-main gap-x-lg fixed border-t-2 bg-linear-to-r from-(--thm) via-white to-(--thm) bottom-0 left-0 right-0 z-200">
+    <fieldset class="m-0 flex justify-center mx-main gap-x-lg fixed border-t-2 backdrop-blur-md bg-linear-to-r from-(--thm) via-white/80 to-(--thm) bottom-0 left-0 right-0 z-200">
         <FilterButtons
             label="Filter by artists"
             allLabel="All"
@@ -38,9 +38,9 @@
 
     <!-- ITEMS -->
     <section class="mt-lg p-main">
-        <ul class="lg:w-3/4 gap-x-main mx-auto flex flex-row flex-wrap justify-between">
+        <ul class="lg:w-full gap-x-main mx-auto flex flex-row flex-wrap justify-between">
         {#each [...filtered,...filtered,...filtered] as activity, i (i)}
-            <li class="flex-1/3  js:reveal reveal-bottom" use:reveal={{delay: i * 80, duration: '600ms', opacityDuration: '300ms'}}>
+            <li class=" js:reveal" use:reveal={{delay: 100, duration: '0ms', opacityDuration: '600ms', once: false}}>
                 {@render row(activity)}
             </li>
         {/each}

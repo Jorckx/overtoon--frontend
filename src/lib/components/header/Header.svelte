@@ -36,7 +36,7 @@ let toggleMenu = $state(false)
 {#snippet menu()}
     <div class="menu-wrapper pb-0 h-full p-main">
         <div class="menu h-full transition-border duration-100 border-b-6">
-            <div class="menu-inner h-fit flex gap-x-4 w-full justify-between">
+            <div class="menu-inner  h-fit flex gap-x-4 w-full justify-between">
 
                 <!-- language switch -->
                 <nav aria-label={page.data.layoutData?.ui?.languages ?? 'Languages'}>
@@ -108,15 +108,17 @@ let toggleMenu = $state(false)
         @apply z-100 h-full flex items-center p-main lg:pl-0 lg:ml-main duration-300;
         @apply border-b-6 border-black;
     }
-    .menu > *{
-        /*@apply border-r-3 pr-sm h-fit;*/
+    /* SCROLLED */
+    .header-wrapper .menu-wrapper{
+        @apply transition-all duration-300;
     }
-    .header-wrapper.scrolled .menu-inner {
-        /*@apply bg-white;*/
+    .header-wrapper.scrolled .menu-wrapper {
+        @apply bg-linear-to-b from-white to-white/95 backdrop-blur-[3px];
     }
-    .header-wrapper.scrolled .menu,
+    .header-wrapper.scrolled .menu-wrapper .menu{
+        @apply border-b-2;
+    }
     .header-wrapper.scrolled .logo {
         @apply lg:border-transparent;
-        /*@apply border-black/3;*/
     }
 </style>

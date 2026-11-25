@@ -6,8 +6,8 @@
 </script>
 
 
-<figure class="pt-main text-left border-b-3 ">
-    <a href={item.id} class="flex flex-row gap-x-main justify-between items-end">
+<figure class="pt-main text-left border-b-3 grid grid-cols-[2fr_1fr] gap-x-lg max-h-[20vh] overflow-clip relative">
+    <a href={item.id} class="flex flex-col gap-x-main justify-between items-start">
         <h3 class="text-md font-tz text-balance leading-tight">{item.title}</h3>
         <div class="flex flex-col py-sm">
             <time class="font-marfa font-bold text-base text-balance leading-tight text-black/35">
@@ -15,7 +15,7 @@
             </time>
         </div>
     </a>
-    <div class="card-image h-full" style="--fill-w:100%; --fill-h:100%">
-        <Image image={item.cover} fit="cover" />
-    </div>
+    <figure class="card-image h-full overflow-clip" style="--fill-w:auto; --fill-h:100%">
+        <Image image={item.cover} fit="cover" ratio="6/5" />
+    </figure>
 </figure>

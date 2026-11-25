@@ -9,7 +9,7 @@ interface Props {
   scale?: number;
 }
 
-let { active = false, scale = 1.3 }: Props = $props();
+let { active = false, scale = 1.8 }: Props = $props();
 </script>
 
 <a

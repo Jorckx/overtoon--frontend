@@ -37,7 +37,7 @@ function prev() {
     </div>
     {/if}
     {#key nth}
-    <div class="h-full js:reveal reveal-right">
+    <div class="h-full">
         <Image image={page.data.pageData.highlights[nth].cover} ratio="inherit" />
     </div>
     {/key}
