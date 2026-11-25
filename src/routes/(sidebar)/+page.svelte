@@ -37,9 +37,11 @@ function prev() {
     </div>
     {/if}
     {#key nth}
-    <div class="h-full">
+    <div class="h-full max-w-dvw">
         <Image image={page.data.pageData.highlights[nth].cover} ratio="inherit" />
     </div>
     {/key}
 </div>
+<div class="hidden lg:block">
 <Sidebar content={sidebarContent} />
+</div>

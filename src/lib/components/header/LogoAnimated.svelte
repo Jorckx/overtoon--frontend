@@ -102,7 +102,7 @@
 </script>
 <a
   href={resolve(localizeHref('/'))}
-  class="block w-full"
+  class="block w-full min-w-0 "
   class:pointer-events-none={hide}
   tabindex={hide ? -1 : undefined}
   aria-hidden={hide ? 'true' : undefined}
@@ -165,9 +165,9 @@
 <style>
 @reference "#lib/styles/app.css";
   svg {
-    /*@apply h-xl;*/
+    /*@apply py-sm;*/
     display: block;
-    /*width: 100%;*/
+    width: 100%;
     /*height: 100%;*/
     overflow: visible;
     transform-origin: top left;

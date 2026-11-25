@@ -1,4 +1,5 @@
 <script lang="ts">
+	// 2. internal
 	let { data, children } = $props();
 	import { page } from '$app/state';
 	import { onNavigate } from '$app/navigation';
@@ -7,6 +8,9 @@
 	import { register } from 'swiper/element/bundle';
 	import { deLocalizeHref } from '#lib/paraglide/runtime.js';
 
+	// 2. Components
+	import Logo from '#lib/components/header/LogoAnimated.svelte';
+	import LogoO from '#lib/components/header/LogoO.svelte';
 	import Ooo from '#lib/components/Ooo.svelte';
 	import Seo from '#lib/components/Seo.svelte';
 	import Header from '#lib/components/header/Header.svelte';
@@ -18,9 +22,9 @@
 
 	// 3. STATE
 	const path = $derived(deLocalizeHref(page.url.pathname));
+	const hasFooter = ['/about'];
 	const OooRight = ['/artists', '/residencies', '/activities', '/about', '/updates'];
 	const OooUp = ['/artists', '/activities'];
-	const hasFooter = ['/about'];
     const slideOoo = $derived(OooRight.includes(path))
     const pushOoo = $derived(OooUp.includes(path))
 	let hh = $state(0);
@@ -48,22 +52,29 @@
 	// // 3. DATA DEBUG
 	// import Datarow from '#lib/components/data/row.svelte'
 	// import Datawrapper from '#lib/components/data/wrapper.svelte'
+	let y = $state(0)
+	let w = $state(0)
 </script>
+<svelte:window bind:scrollY={y} bind:innerWidth={w} />
 
 <!-- SEO / GDPR -->
 <Seo globalseo={data.layoutData?.seo} isdev={data.devmode} />
 <Consent production={!data.devmode} />
 
-<!-- MARKUP -->
-<header bind:clientHeight={hh} class="fixed w-full top-0 z-900 h-fit" style:--thm={page.data.theme || 'var(--color-cyan-400)'}>
-	<Header />
-</header>
+<!-- SNIPPETS -->
+{#snippet logoheader()}
+    <div class="logo" bind:clientHeight={hh}>
+        <LogoO active={y > 50} />
+        <Logo duration={3000} interval={10000} hide={y > 50} />
+    </div>
+{/snippet}
 
-{#if hh}
-<main style:--hh="{hh}px" style:--thm={page.data.theme || 'var(--color-cyan-400)'} class="min-h-[calc(100vh-var(--hh))] pt-[calc(var(--hh)-1px)]">
+<!-- MARKUP -->
+<Header {logoheader} {y} {w} />
+
+<main style:--hh="{hh}px" style:--thm={page.data.theme || 'var(--color-cyan-400)'} class="min-h-[calc(100dvh-var(--hh))] pt-(--hh)">
 	{@render children()}
 </main >
-{/if}
 
 <!-- Ooo -->
 <Ooo {slideOoo} {pushOoo} />
@@ -78,3 +89,12 @@
 	<Datarow data={JSON.stringify(page.data.layoutData, null, 2)} sum="layout data" />
 {/snippet}
 <Datawrapper content={datarows} /> -->
+<style>
+    @reference '#lib/styles/app.css';
+    .logo{
+        @apply
+            col-span-1
+            z-100 min-w-0 h-full flex items-start p-main lg:pl-0 lg:ml-main duration-300
+            lg:border-b-6 border-black;
+    }
+</style>

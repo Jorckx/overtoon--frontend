@@ -31,40 +31,37 @@
     }: Props = $props();
 
 	// JAVASCRIPT
-  	let isMobile = $state<boolean>(false);
-  	let swiperEl = $state<null | SwiperOptions>(null);
 	const BREAKPOINT = 768;
-	// loop needs enough slides to fill the viewport, fewer get repeated
 	const minLoopSlides = 6;
+	// null = not decided yet (SSR + first client render). Nothing heavy is rendered until we know.
+    let isMobile = $state<boolean | null>(null);
+    let swiperEl = $state<SwiperContainer | null>(null);
 
-	const count = $derived(data?.length ?? 0);
-	const slides = $derived.by(() => {
-		if (count === 0) return [];
-		const repeats = count < minLoopSlides ? Math.ceil(minLoopSlides / count) : 1;
-		return Array.from({ length: count * repeats }, (_, i) => ({
-			item: data[i % count],
-			isClone: i >= count,
-		}));
-	});
+    const count = $derived(data?.length ?? 0);
+    const slides = $derived.by(() => {
+        if (count === 0) return [];
+        const repeats = count < minLoopSlides ? Math.ceil(minLoopSlides / count) : 1;
+        return Array.from({ length: count * repeats }, (_, i) => ({
+            item: data[i % count],
+            isClone: i >= count,
+        }));
+    });
 
-	// swiper
-	onMount(() => {
-		const mq = window.matchMedia(`(max-width: ${BREAKPOINT - 1}px)`);
-		isMobile = mq.matches;
-		const handler = (e) => { isMobile = e.matches; };
-		mq.addEventListener('change', handler);
+    onMount(() => {
+        const mq = window.matchMedia(`(max-width: ${BREAKPOINT - 1}px)`);
+        isMobile = mq.matches;
+        const handler = (e: MediaQueryListEvent) => (isMobile = e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    });
 
-		// Apply swiper parameters when element is ready
-		if (!isMobile && count > 1) {
-			requestAnimationFrame(() => {
-				if (swiperEl) {
-					Object.assign(swiperEl, params);
-					swiperEl.initialize();
-				}
-			});
-		}
-		return () => mq.removeEventListener('change', handler);
-	});
+    // (re)initialise whenever a fresh <swiper-container> appears on desktop
+    $effect(() => {
+        if (isMobile !== false || !swiperEl || count < 2) return;
+        if (swiperEl.swiper) return; // already initialised
+        Object.assign(swiperEl, params ?? defaultParams);
+        swiperEl.initialize();
+    });
 
 </script>
 
@@ -82,7 +79,7 @@
     	{/each}
     </div>
     {:else if isMobile}
-    <div class="gallery w-dvw pr-intro pt-[var(--hh)+50rem]">
+    <div class="gallery w-full">
     	{#each data as item, i (i)}
     		{@render slide(item)}
     	{/each}

@@ -6,7 +6,7 @@
 
 
 <!-- MARKUP -->
-<aside class="lg:fixed pt-(--hh) lg:w-(--sidebar-w) h-full items-end justify-between flex flex-col top-0 bottom-0 right-0">
+<aside class="fixed z-100 pt-(--hh) lg:w-(--sidebar-w) h-full items-end justify-between flex flex-col inset-0 lg:left-auto">
     <!-- inner -->
     <div use:reveal={{delay: 300, duration: '100ms', opacityDuration: '300ms'}} class="js:reveal p-main w-full h-full flex flex-col justify-between">
         {@render content()}
@@ -32,18 +32,15 @@
     aside::after{
         content: '';
         --tw-duration: 1s;
-        @apply hidden lg:block fixed  w-(--sidebar-w) right-0 top-0 bottom-0 z-[-1];
-        @apply bg-linear-to-b from-(--thm) to-white;
+        @apply
+            block fixed lg:w-(--sidebar-w)
+            z-[-1]
+            inset-0 lg:left-auto
+            bg-linear-to-b from-(--thm) to-white;
     }
 
     aside,
     aside::after {
         transition: opacity 0.5s ease-out;
-    }
-    aside.hide,
-    aside.hide::after {
-        opacity: 0;
-        z-index: -1;
-        pointer-events: none;
     }
 </style>

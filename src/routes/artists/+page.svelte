@@ -20,9 +20,6 @@
     const filtered = $derived(filterByFields(page.data.artists, selections));
     const hasFilter = $derived(selections.years.length > 0);
     const years = $derived(getFieldValues(page.data.artists ?? [], 'years').reverse()); // newest first
-
-    // 5. residents: current/past split is done in +layout.server.ts We use it here for the filter 'all' label
-    const showingPast = $derived(page.data.residentsMode === 'past');
 </script>
 
 <!-- SNIPPETS -->
