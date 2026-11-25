@@ -1,6 +1,6 @@
 <script lang="ts" module>
   const buttonClass =
-    ' leading-normal cursor-pointer lowercase focus-visible:outline-2 focus-visible:outline-offset-2 font-bold aria-pressed:text-black/35';
+    'leading-normal px-10 cursor-pointer lowercase focus-visible:outline-2 focus-visible:outline-offset-2 font-bold aria-pressed:text-black/35';
 </script>
 
 <script lang="ts">
@@ -30,16 +30,16 @@
 
 {#if options.length > 1}
 <legend class="sr-only">{label}</legend>
-<ul class="flex justify-center flex-wrap gap-main ">
+<ul class="flex justify-center flex-wrap">
     {#if !hideAll}
-    <li>
+    <li class="not-last:border-r-2 py-sm">
     <button type="button" class={buttonClass} aria-pressed={selected.length === 0} onclick={handleReset}>
         {allLabel}
     </button>
     </li>
     {/if}
     {#each options as option (option)}
-    <li>
+    <li class="not-last:border-r-2 py-sm">
         <button
         type="button"
         class={buttonClass}

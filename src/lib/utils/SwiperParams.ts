@@ -27,7 +27,7 @@ export const defaultParams: SwiperOptions = {
 // cards
 export const cardParams: SwiperOptions = {
 		slidesPerView: 'auto',
-		spaceBetween: 3,
+		spaceBetween: 6,
 		loop: true,
 		centeredSlides: true,
 		freeMode: {

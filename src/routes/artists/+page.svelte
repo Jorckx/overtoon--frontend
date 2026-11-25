@@ -27,17 +27,17 @@
 
 <!-- SNIPPETS -->
 {#snippet card(artist)}
-    <CardArtist item={artist} />
+    <CardArtist item={artist}  />
 {/snippet}
 {#snippet row(artist)}
     <CardRow item={artist} />
 {/snippet}
 
 <!-- MARKUP -->
-<!-- <div class="grid grid-rows-1 h-fit lg:grid-cols-(--interface-cols)"> -->
+
 <article class="w-full min-w-0 grid grid-rows-[auto_minmax(0,1fr)] grid-cols-1 h-full p-main lg:p-0" >
     <!-- filter -->
-    <fieldset class="m-0 flex justify-center mx-main p-sm gap-x-lg fixed border-t-6 bg-linear-to-r from-transparent via-white to-transparent bottom-0 left-0 right-0 z-200">
+    <fieldset class="m-0 flex justify-center mx-main gap-x-lg fixed border-t-2 bg-linear-to-r from-transparent via-white to-transparent bottom-0 left-0 right-0 z-200">
         <FilterButtons
             label="Filter by residency year"
             allLabel="random"
