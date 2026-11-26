@@ -103,7 +103,7 @@
     </div>
 
     <!-- tabs -->
-    <div class="flex justify-between gap-4 text-sm border-t-3 border-black pt-1" role="tablist">
+    <div class="flex justify-between gap-4 text-sm border-t-6 border-black pt-1" role="tablist">
         {@render tabs()}
     </div>
 </div>

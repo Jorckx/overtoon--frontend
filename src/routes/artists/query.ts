@@ -28,6 +28,7 @@ const artistQuery = {
 			modified: "page.modified('c', 'date')",
       cover: getImages('page.cover.toFile'),
       links: linksQuery,
+      activities: 'page.publicActivities',
       periods: {
         query: 'page.periods.toStructure',
         select: {
@@ -37,7 +38,6 @@ const artistQuery = {
           links: true
         },
       },
-      activities: true
   }
 }
 export const pageQuery  = {

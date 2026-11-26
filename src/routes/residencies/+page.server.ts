@@ -22,7 +22,7 @@ export async function load({ url, locals }) {
   console.log(locals.cacheTags)
 
   return {
-    theme: "var(--color-purple-500)",
+    theme: "var(--color-purple-300)",
     pageData,
     isPreview: !!preview,
     metamessage: url.pathname.slice(1)

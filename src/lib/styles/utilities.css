@@ -7,14 +7,10 @@
 @utility main {
     @apply col-start-1 row-start-1 min-h-0 min-w-0;
 }
+@utility label {
+    @apply px-[0.5em] py-[0.25em] border border-black/10 font-marfa font-bold text-xs text-black/35 rounded-xs;
+}
 
-/* gradients */
-@utility bg-gradient {
-    @apply bg-linear-to-b from-gradient-1 to-gradient-2;
-}
-@utility bg-gradient-reverse {
-    @apply bg-linear-to-t from-gradient-1 to-gradient-2;
-}
 
 /* Filled shape: image only shows inside the blob */
 @utility mask-filled {

@@ -10,7 +10,7 @@
 	import CardRow from '#lib/components/CardArtistRow.svelte';
 	import CardArtist from '#lib/components/CardArtist.svelte';
 	import Swiper from '#lib/components/Swiper.svelte';
-    import FilterButtons from '#lib/components/Filter.svelte'
+    import FilterSelect from '#lib/components/FilterSelect.svelte'
 	// import Intro from '#lib/components/Intro.svelte';
 	// import Sidebar from '#lib/components/Sidebar/index.svelte';
 
@@ -34,9 +34,9 @@
 
 <article class="w-full min-w-0 grid grid-rows-[auto_minmax(0,1fr)] grid-cols-1 h-full p-main lg:p-0" >
     <!-- filter -->
-    <fieldset class="m-0 flex justify-center mx-main gap-x-lg fixed border-t-2 bg-linear-to-r from-transparent via-white to-transparent bottom-0 left-0 right-0 z-200">
-        <FilterButtons
-            label="Filter by residency year"
+    <fieldset class="m-0 flex justify-center mx-main fixed border-t-2 bg-linear-to-r from-(--thm) via-white to-(--thm) bottom-0 left-0 right-0 z-200">
+        <FilterSelect
+            label="By year"
             allLabel="random"
             options={years}
             single
@@ -53,9 +53,9 @@
     {:else}
         <!-- filtered grid -->
         <section class="artists-grid min-h-[200vh] mt-lg">
-            <ul class="w-3/4 mx-auto flex flex-col flex-wrap justify-start">
+            <ul class="lg:w-full w-full lg:px-main flex flex-col flex-wrap justify-start">
             {#each filtered as artist, i (i)}
-                <li class="grow-0 js:reveal reveal-bottom" use:reveal={{delay: i * 80, duration: '600ms', opacityDuration: '300ms'}}>
+                <li class="grow-0 js:reveal reveal-bottom" use:reveal={{delay: 80, duration: '600ms', opacityDuration: '300ms'}}>
                     {@render row(artist)}
                 </li>
             {/each}

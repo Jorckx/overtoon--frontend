@@ -116,7 +116,7 @@
         @apply right-0;
     }
     .resonance.pushOoo{
-        @apply bottom-lg;
+        @apply bottom-lg opacity-50!;
     }
     .resonance.ready {
         opacity: 80%;

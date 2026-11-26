@@ -27,31 +27,36 @@ const artistQuery = {
     }
 }
 const activityQuery = {
-		query: 'page.children',
-		select: {
-			isListed: true,
-			id: true,
-      title: true,
-      text: 'page.text.inline',
-      modified: "page.modified('c', 'date')",
-      year: 'page.start.toDate("Y")',
-      eventtype: 'page.eventtype',
-			start: 'page.start',
-			end: 'page.end',
-      cover: getImages('page.cover.toFile'),
-      // links: linksQuery,
-      // periods: {
-      //   query: 'page.periods.toStructure',
-      //   select: {
-      //     start: 'structureItem.start',
-      //     end: 'structureItem.end',
-      //     year: 'structureItem.start.toDate("y")',
-      //     links: true
-      //   },
-      // },
-      // activities: true
-  }
+	query: 'page.children',
+	select: {
+		isListed: true,
+		id: true,
+    title: true,
+    subtitle: true,
+    text: 'page.text.inline',
+    modified: "page.modified('c', 'date')",
+    year: 'page.start.toDate("Y")',
+    eventtype: 'page.eventtype',
+		start: 'page.start',
+		end: 'page.end',
+    cover: getImages('page.cover.toFile'),
+    artists: {
+      query: 'page.artists.toPages',
+      select: {
+        title: true,
+        id: true,
+      }
+    },
+    links: {
+      query: 'page.links.toStructure',
+      select: {
+        id: 'structureItem.link.toPage ? structureItem.link.toPage.id : structureItem.link',
+        label: true,
+      },
+    },
+  },
 }
+
 export const pageQuery  = {
  	query: `page("activities")`,
   select: {

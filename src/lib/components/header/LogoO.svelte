@@ -14,7 +14,7 @@ let { active = false, scale = 1.8 }: Props = $props();
 
 <a
   href={resolve(localizeHref('/'))}
-  class="o fixed top-main"
+  class="o absolute top-main"
   class:active
   style:--o-scale={scale}
   aria-label="Home"
@@ -41,8 +41,8 @@ let { active = false, scale = 1.8 }: Props = $props();
 
   }
   .o.active {
-    @apply pointer-events-auto;
-    transform: scale(var(--o-scale)) translateY(-0.8rem);
+    @apply pointer-events-auto opacity-80;
+    transform: scale(var(--o-scale)) translateY(-0.8rem) translateX(0.5rem);
   }
   svg {
     display: block;

@@ -30,7 +30,7 @@ export async function load({ url, locals }) {
   console.log(locals.cacheTags)
 
   return {
-    theme: "var(--color-green-500)",
+    theme: "var(--color-purple-300)",
     activities,
     pageData,
     isPreview: !!preview,

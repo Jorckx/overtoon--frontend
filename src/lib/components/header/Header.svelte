@@ -4,6 +4,7 @@ import { localizeHref, deLocalizeHref, locales, getLocale } from '#lib/paraglide
 import { resolve } from '$app/paths';
 import { page } from '$app/state';
 let { logoheader, y, w } = $props()
+
 // import { fade } from 'svelte/transition';
 // const path = $derived(deLocalizeHref(page.url.pathname));
 
@@ -17,6 +18,9 @@ import MenuMobile from '#lib/components/header/MenuMobile.svelte';
 // 2. STATE
 const currentLang = $derived(getLocale());
 let toggleMenu = $state(false)
+let closeMenu = () => {
+  toggleMenu = false
+}
 </script>
 
 {#snippet mobileToggle()}
@@ -32,8 +36,8 @@ let toggleMenu = $state(false)
 {/snippet}
 {#snippet menu()}
     <div class="menu-wrapper pb-0 h-full p-main">
-        <div class="menu h-full transition-border duration-100 border-b-6">
-            <div class="menu-inner h-fit flex gap-x-4 w-full justify-between">
+        <div class="menu">
+            <div class="menu-inner">
 
                 <!-- language switch -->
                 <nav aria-label={page.data.layoutData?.ui?.languages ?? 'Languages'}>
@@ -58,7 +62,7 @@ let toggleMenu = $state(false)
                     <!-- <ul class="pb-main grid grid-rows-2 grid-cols-2 gap-x-8"> -->
                     <ul class="block">
                     {#each page.data.layoutData?.menu ?? [] as child, i (i)}
-                        <li class="font-semibold lowercase leading-4.5 text-right">
+                        <li class="font-bold lowercase leading-tight text-right">
                             <a
                                 href={resolve(localizeHref('/' + child.id, { locale: currentLang }))}
                                 class:font-normal={page.url.pathname === child.id}
@@ -86,7 +90,7 @@ let toggleMenu = $state(false)
             </div>
             <div class="menu-drop row-start-2 col-span-2">
                 <div class="min-h-0 overflow-hidden">
-                    <MenuMobile open={toggleMenu}/>
+                    <MenuMobile onSelect={closeMenu} />
                 </div>
             </div>
             {/if}
@@ -102,7 +106,7 @@ let toggleMenu = $state(false)
     @reference "#lib/styles/app.css";
     .header-top {
         @apply
-            w-full grid grid-cols-[1fr_auto] grid-rows-[auto_auto] gap-x-main flex-row justify-between z-400
+            w-full lg:h-full grid lg:block grid-cols-[1fr_auto] grid-rows-[auto_auto] gap-x-main lg:gap-0 z-400
             bg-white/95 backdrop-blur-sm border-b-4
             lg:border-none lg:backdrop-blur-none lg:bg-transparent;
     }
@@ -122,18 +126,24 @@ let toggleMenu = $state(false)
             w-full grid lg:grid-cols-(--interface-cols) grid-rows-1
             duration-200 transition-all;
     }
+    .menu {
+         @apply h-full transition-[border-size] duration-200 border-b-6;
+    }
+    .menu-inner {
+         @apply h-fit flex gap-x-4 w-full justify-between;
+    }
 
     /* SCROLLED */
     .header-wrapper .menu-wrapper{
-        @apply transition-all duration-300;
+        @apply  duration-300 transition-[background];
     }
     .header-wrapper.scrolled .menu-wrapper {
-        @apply bg-linear-to-l from-white to-white/95 backdrop-blur-[2px] rounded-bl-sm h-fit;
+        @apply   h-fit bg-linear-to-bl  to-white/85 from-(--thm) backdrop-blur-[2px];
     }
     .header-wrapper.scrolled .menu-wrapper .menu{
-        @apply border-b-2 pb-main;
+        @apply border-b-6 pb-main;
     }
-    .header-wrapper.scrolled :global(.logo) {
+    .header-wrapper.scrolled :global(.logo-header) {
         @apply lg:border-transparent;
     }
 </style>

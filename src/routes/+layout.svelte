@@ -27,7 +27,9 @@
 	const OooUp = ['/artists', '/activities'];
     const slideOoo = $derived(OooRight.includes(path))
     const pushOoo = $derived(OooUp.includes(path))
-	let hh = $state(0);
+	let hh = $state(200);
+	let y = $state(0)
+	let w = $state(0)
 
 	// 3. ON NAVIGATE
 	onNavigate((navigation) => {
@@ -52,8 +54,7 @@
 	// // 3. DATA DEBUG
 	// import Datarow from '#lib/components/data/row.svelte'
 	// import Datawrapper from '#lib/components/data/wrapper.svelte'
-	let y = $state(0)
-	let w = $state(0)
+
 </script>
 <svelte:window bind:scrollY={y} bind:innerWidth={w} />
 
@@ -63,7 +64,7 @@
 
 <!-- SNIPPETS -->
 {#snippet logoheader()}
-    <div class="logo" bind:clientHeight={hh}>
+    <div class="logo-header grid items-center relative" bind:clientHeight={hh}>
         <LogoO active={y > 50} />
         <Logo duration={3000} interval={10000} hide={y > 50} />
     </div>
@@ -91,7 +92,7 @@
 <Datawrapper content={datarows} /> -->
 <style>
     @reference '#lib/styles/app.css';
-    .logo{
+    .logo-header{
         @apply
             col-span-1
             z-100 min-w-0 h-full flex items-start p-main lg:pl-0 lg:ml-main duration-300

@@ -102,7 +102,7 @@
 </script>
 <a
   href={resolve(localizeHref('/'))}
-  class="block w-full min-w-0 "
+  class="block w-full min-w-0"
   class:pointer-events-none={hide}
   tabindex={hide ? -1 : undefined}
   aria-hidden={hide ? 'true' : undefined}
