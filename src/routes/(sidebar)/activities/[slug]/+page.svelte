@@ -18,7 +18,7 @@
 
 <!-- MARKUP -->
 {#if page.data.pageData}
-    <figure class="col-span-2 h-[calc(100dvh-var(--hh))] relative">
+    <figure class="col-span-1 h-[calc(100dvh-var(--hh))] relative">
         <Image image={page.data.pageData?.cover}/>
     </figure>
     <Sidebar content={sidebarContent} />
