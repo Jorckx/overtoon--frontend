@@ -6,6 +6,7 @@
    	// import { formatDate, DATE_FORMATS } from '#lib/utils/formatDate.js';
 	import { formatPeriod } from '#lib/utils/formatPeriod.js';
 	import { localizeHref } from '#lib/paraglide/runtime.js';
+	import  Image  from '#lib/components/Image.svelte';
 
     // 2. state
     let activeTab = $state<string>('text');
@@ -47,26 +48,6 @@
         </ul>
     </div>
 {/snippet}
-{#snippet tabs()}
-    <!-- prim tab -->
-    <button type="button" role="tab"
-        aria-selected={activeTab === 'text'}
-        class="cursor-pointer text-base font-bold {activeTab === 'text' ? '' : 'opacity-35'}"
-        onclick={() => (activeTab = 'text')}
-    >
-        text
-    </button>
-    <!-- sec tab -->
-    {#if page.data.pageData?.activities.length}
-    <button type="button" role="tab"
-        aria-selected={activeTab === 'activities'}
-        class="cursor-pointer text-base font-bold {activeTab === 'activities' ? '' : 'opacity-35'}"
-        onclick={() => (activeTab = 'activities')}
-    >
-       projects / links
-    </button>
-    {/if}
-{/snippet}
 {#snippet links()}
     <header class="sidebar-header justify-end">
         <h3>links</h3>
@@ -97,22 +78,53 @@
         </ul>
     </div>
 {/snippet}
+{#snippet tabs()}
+    <!-- prim tab -->
+    <button type="button" role="tab"
+        aria-selected={activeTab === 'text'}
+        class="tab-button {activeTab === 'text' ? '' : 'opacity-35'}"
+        onclick={() => (activeTab = 'text')}
+    >
+        text
+    </button>
+    <div class="flex gap-x-lg">
+        <!-- gallery tab -->
+        <button type="button" role="tab"
+            aria-selected={activeTab === 'gallery'}
+            class="tab-button lg:hidden {activeTab === 'gallery' ? '' : 'opacity-35'}"
+            onclick={() => (activeTab = 'gallery')}
+        >
+            images
+        </button>
+        <!-- sec tab -->
+        {#if page.data.pageData?.activities.length}
+        <button type="button" role="tab"
+            aria-selected={activeTab === 'activities'}
+            class="tab-button {activeTab === 'activities' ? '' : 'opacity-35'}"
+            onclick={() => (activeTab = 'activities')}
+        >
+           projects/links
+        </button>
+        {/if}
+    </div>
+{/snippet}
+
 
 <!-- Markup -->
 <div class="grid grid-rows-[auto_minmax(0,1fr)_auto] flex-col h-full gap-y-main">
     <!-- headline -->
     <header>
-        <a href={resolve(localizeHref('/artists'))} class="flex justify-end text-base font-bold items-center gap-x-sm leading-tight mb-sm">
+        <a href={resolve(localizeHref('/artists'))} class="tab-back">
             ← artists
         </a>
-        <h1 class="font-tz text-md leading-tight sticky top-0">{page.data.pageData?.title}</h1>
+        <h1 class="tab-title">{page.data.pageData?.title}</h1>
     </header>
 
     <!-- views -->
     <div class="flex flex-col justify-start">
         <!-- info -->
         {#if activeTab === 'text'}
-        <div class="desc relative font-marfa text-sm h-full overflow-y-scroll">{@html page.data.pageData?.text}</div>
+        <div class="tab-text">{@html page.data.pageData?.text}</div>
         <!-- activities -->
         {:else if activeTab === 'activities'}
         <div class="my-main flex flex-col gap-y-main h-full overflow-y-scroll">
@@ -131,28 +143,19 @@
             {/if}
             {#if page.data.pageData?.presentations?.length}
             <figure>
-                {@render links()}
+                {@render presentations()}
             </figure>
             {/if}
         </div>
+        {:else if activeTab === 'gallery'}
+            <figure class="lg:hidden">
+                <Image image={page.data.pageData?.cover}/>
+            </figure>
         {/if}
     </div>
 
     <!-- tabs -->
-    <div class="flex justify-between gap-4 text-sm border-t-6 border-black pt-1" role="tablist">
+    <div class="tabs" role="tablist">
         {@render tabs()}
     </div>
 </div>
-
-<style>
-    @reference "#lib/styles/app.css";
-    .desc :global(p){
-        @apply mb-[1em];
-    }
-    .desc {
-        padding-bottom: 2rem;
-        /* fade the last 4rem to transparent */
-          -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
-                  mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
-    }
-</style>

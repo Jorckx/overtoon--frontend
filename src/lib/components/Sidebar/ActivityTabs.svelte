@@ -31,7 +31,7 @@
     <!-- prim tab -->
     <button type="button" role="tab"
         aria-selected={activeTab === 'text'}
-        class="cursor-pointer text-base font-bold {activeTab === 'text' ? '' : 'opacity-35'}"
+        class="tab-button {activeTab === 'text' ? '' : 'opacity-35'}"
         onclick={() => (activeTab = 'text')}
     >
         text
@@ -40,7 +40,7 @@
     {#if page.data.pageData?.artists.length}
     <button type="button" role="tab"
         aria-selected={activeTab === 'details'}
-        class="cursor-pointer text-base font-bold {activeTab === 'details' ? '' : 'opacity-35'}"
+        class="tab-button {activeTab === 'details' ? '' : 'opacity-35'}"
         onclick={() => (activeTab = 'details')}
     >
        details
@@ -71,15 +71,15 @@
         <a href={resolve(localizeHref('/activities'))} class="flex justify-end text-base font-bold items-center gap-x-sm leading-tight mb-sm">
             ← activities
         </a>
-        <h1 class="font-tz text-md leading-tight">{page.data.pageData?.title}</h1>
-        <h2 class="font-tz text-base text-black/35 leading-tight mt-1">{page.data.pageData?.subtitle}</h2>
+        <h1 class="tab-title">{page.data.pageData?.title}</h1>
+        <h2 class="tab-subtitle">{page.data.pageData?.subtitle}</h2>
     </header>
 
     <!-- views -->
     <div class="flex flex-col justify-start">
         <!-- info -->
         {#if activeTab === 'text'}
-        <div class="desc relative font-tz text-sm h-full overflow-y-scroll">{@html page.data.pageData?.text}</div>
+        <div class="tab-text">{@html page.data.pageData?.text}</div>
         <!-- activities -->
         {:else if activeTab === 'details'}
         <div class="my-main flex flex-col gap-y-main h-full overflow-y-scroll">

@@ -41,14 +41,14 @@
     </a>
 
     <!-- PROJECTS (hidden on mobile) -->
-    <div class="w-[calc(var(--sidebar-w)-var(--spacing-main)*2)] flex-col shrink-0 lg:flex hidden h-full pt-sm border-t-2">
+    <div class="w-[calc(var(--sidebar-w)-var(--spacing-main)*2)] flex-col shrink-0 lg:flex hidden h-full pt-sm border-t-2 opacity-35">
 
 
         <!-- artists -->
         {#if item.artists.length}
         <ul>
             {#each item.artists as link, i (i)}
-            <li class="font-tz leading-snug w-full not-first:border-t border-black/10">
+            <li class="font-tz leading-snug w-full not-first:border-t border-black/20">
                 <a href={resolve("/" + link.id)} class="flex justify-between gap-x-sm w-full items-center">
                     {link.title}
                 </a>
@@ -61,7 +61,7 @@
         {#if item.links.length}
         <ul>
             {#each item.links as link, i (i)}
-            <li class="font-tz leading-snug w-full not-first:border-t border-black/10">
+            <li class="font-tz leading-snug w-full not-first:border-t border-black/20">
                 <a href={resolve("/" + link.id)} class="flex justify-between gap-x-sm w-full items-center">
                     {link.label}
                 </a>

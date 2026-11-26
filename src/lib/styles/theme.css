@@ -37,6 +37,7 @@ REF.: https://tailwindcss.com/docs/theme#default-theme-variable-reference
     --text-sm: var(--step--2);
     --text-base: var(--step--1);
     --text-md: var(--step-2);
+    --text-lg: var(--step-4);
 
     /* spacing */
     --spacing-xl: 8rem;

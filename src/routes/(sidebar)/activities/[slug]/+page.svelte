@@ -7,13 +7,13 @@
 	// 2. components
 	import Image from '#lib/components/Image.svelte';
 	import Sidebar from '#lib/components/Sidebar/index.svelte';
-	import ActivityTab from '#lib/components/Sidebar/ActivityTab.svelte';
+	import ActivityTabs from '#lib/components/Sidebar/ActivityTabs.svelte';
 	// import Arrow from '#lib/components/icon/Arrow.svelte';
 
 </script>
 <!-- SNIPPETS -->
 {#snippet sidebarContent()}
-    <ActivityTab/>
+    <ActivityTabs/>
 {/snippet}
 
 <!-- MARKUP -->
