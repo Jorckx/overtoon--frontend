@@ -138,7 +138,8 @@ let closeMenu = () => {
         @apply  duration-300 transition-[background];
     }
     .header-wrapper.scrolled .menu-wrapper {
-        @apply   h-fit bg-linear-to-bl  to-white/85 from-(--thm) backdrop-blur-[2px];
+        @apply   h-fit bg-linear-to-bl  to-white/85 from-white backdrop-blur-[2px];
+        /*bg-linear-to-bl  to-white/85 from-(--thm)*/
     }
     .header-wrapper.scrolled .menu-wrapper .menu{
         @apply border-b-6 pb-main;

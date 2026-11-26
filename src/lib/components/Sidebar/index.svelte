@@ -46,9 +46,7 @@
 
 
     /* SHARED (activity/artists) */
-    .sidebar :global(.desc p){
-        @apply mb-[1em];
-    }
+
     .sidebar :global(.tabs){
         @apply flex justify-between gap-4 text-sm lg:border-t-6 border-t-4 border-black pt-1;
     }
@@ -63,6 +61,9 @@
     }
     .sidebar :global(.tab-subtitle){
         @apply font-tz text-base text-black/35 leading-tight mt-1;
+    }
+    .sidebar :global(.tab-text p){
+        @apply mb-[1em];
     }
     .sidebar :global(.tab-text){
          @apply relative font-marfa text-base lg:text-sm h-full overflow-y-scroll pb-8;

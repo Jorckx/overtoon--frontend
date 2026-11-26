@@ -37,7 +37,7 @@
     <fieldset class="m-0 flex justify-center mx-main fixed border-t-2 bg-linear-to-r from-(--thm) via-white to-(--thm) bottom-0 left-0 right-0 z-200">
         <FilterSelect
             label="By year"
-            allLabel="random"
+            allLabel="selection"
             options={years}
             single
             bind:selected={selections.years}

@@ -20,8 +20,9 @@
                 <h3 class="text-md font-tz text-balance leading-none">{item.title}</h3>
                 <div class="flex pt-sm items-start w-full flex-col">
                 {#each item.periods as period, i (i)}
-                    <time class="font-marfa font-bold text-base text-balance leading-snug text-black/35">
+                    <time class="font-marfa font-bold text-base text-balance leading-snug text-black/35 flex items-center gap-x-sm">
                         {formatPeriod(period)}
+                        {#if period.residencetype}<span class="label opacity-35">{period.residencetype}</span>{/if}
                     </time>
                 {/each}
                 </div>
@@ -29,10 +30,10 @@
         </a>
 
         <!-- PROJECTS (hidden on mobile) -->
-        <div class="w-[calc(var(--sidebar-w)-var(--spacing-main)*2)] shrink-0 lg:block hidden h-full pt-sm border-t-2">
+        <div class="w-[calc(var(--sidebar-w)-var(--spacing-main)*2)] shrink-0 lg:block hidden h-full pt-sm border-t-2 opacity-35">
             <ul>
                 {#each item.activities as event, i (i)}
-                <li class="font-tz leading-snug w-full not-first:border-t border-black/10">
+                <li class="font-tz leading-snug w-full not-first:border-t border-black/20">
                     <a href={resolve("/" + event.id)} class="flex justify-between gap-x-sm w-full items-center">
                         {event.title}
                         <span class="label">{event.eventtype}</span>

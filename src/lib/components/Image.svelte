@@ -7,6 +7,7 @@
 		webalt = '',
 		ratio = '',
 		fit = 'cover',
+		position = 'center',
 		sizes = '100vw',
 		eager = false,
 		delay = 0,
@@ -63,6 +64,7 @@
 			decoding="async"
 			class:loaded
 			style:object-fit={fit}
+			style:object-position={position}
 			style:aspect-ratio={ratio}
 			style:height={ratio ? '100%' : undefined}
 			style:transition-delay="{delay}s"

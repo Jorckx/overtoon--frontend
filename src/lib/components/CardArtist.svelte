@@ -16,11 +16,15 @@
             <a href={localizeHref(item.id)} >
                 <h3 class="text-md font-tz min-w-full text-balance leading-tight">{item.title}</h3>
             </a>
-            {#if item.periods[0]}
-            <time class="font-marfa font-bold text-base text-balance leading-tight text-black/35">
-                {formatPeriod(item.periods[0])}
-            </time>
-            {/if}
+
+            <ul>
+            {#each item.periods as period, i (i)}
+                <li class="font-marfa font-bold text-base text-balance leading-tight text-black/35 flex gap-x-sm items-center">
+                    <time>{formatPeriod(period)}</time>
+                    {#if period.residencetype}<span class="label opacity-35">{period.residencetype}</span>{/if}
+                </li>
+            {/each}
+            </ul>
         </header>
         <!-- Image: fills the row height, width follows the image ratio -->
 </figure>

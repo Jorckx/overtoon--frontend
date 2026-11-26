@@ -8,7 +8,7 @@
     @apply col-start-1 row-start-1 min-h-0 min-w-0;
 }
 @utility label {
-    @apply px-[0.5em] py-[0.25em] border border-black/10 font-marfa font-bold text-xs text-black/35 rounded-xs;
+    @apply px-[0.35em] py-[0.05em] border border-black/35 font-marfa font-bold text-xs text-black rounded-xs leading-tight h-fit;
 }
 
 

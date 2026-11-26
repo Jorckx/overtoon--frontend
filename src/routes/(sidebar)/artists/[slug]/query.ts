@@ -34,7 +34,7 @@ export function getPageQuery(pageId: string) {
           start: 'structureItem.start',
           end: 'structureItem.end',
           year: 'structureItem.start.toDate("y")',
-          links: true
+          residencetype: true,
         },
       },
       blocks: 'page.blocks.toBlocks',

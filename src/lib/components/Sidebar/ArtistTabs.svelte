@@ -71,8 +71,9 @@
     <div class="sidebar-content mb-0">
         <ul>
             {#each page.data.pageData.periods as period, i (i)}
-                <li class="not-last:border-b border-black/10 font-marfa font-bold flex gap-4 justify-between py-0.5">
+                <li class="not-last:border-b border-black/10 font-marfa font-bold flex gap-sm items-center justify-between py-0.5">
                     {formatPeriod(period)}
+                    {#if period.residencetype}<span class="label opacity-35">{period.residencetype}</span>{/if}
                 </li>
             {/each}
         </ul>

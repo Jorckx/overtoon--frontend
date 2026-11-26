@@ -35,7 +35,7 @@ const artistQuery = {
           start: 'structureItem.start',
           end: 'structureItem.end',
           year: 'structureItem.start.toDate("y")',
-          links: true
+          residencetype: true,
         },
       },
   }

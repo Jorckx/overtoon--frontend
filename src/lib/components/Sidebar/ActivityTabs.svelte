@@ -93,11 +93,6 @@
                 {@render links()}
             </figure>
             {/if}
-            {#if page.data.pageData?.presentations?.length}
-            <figure>
-                {@render links()}
-            </figure>
-            {/if}
         </div>
         {/if}
     </div>
